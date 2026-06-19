@@ -1,0 +1,77 @@
+<h1 id="tomographer">Tomographer</h1>
+<p>Tomographer is an end-to-end clustering redshift package for
+estimating redshift distributions and probability density functions from
+angular cross-correlations.</p>
+<hr />
+<h2 id="installation">Installation</h2>
+<ol type="1">
+<li><p>Download the repository from Google Drive:</p>
+<pre class="text"><code>&lt;Google Drive Link&gt;</code></pre></li>
+<li><p>Install the package</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> tomographer_beta</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-e</span> .</span></code></pre></div></li>
+</ol>
+<hr />
+<h2 id="project-structure">Project Structure</h2>
+<pre class="text"><code>tomographer_beta/
+├── runtime_script/
+│   ├── conf.ini                # Configuration file
+│   ├── tomo.py                 # Main code
+│   └── tomo.ipynb              # Interactive notebook
+├── precalculated_data/         # Downloaded precalculated files
+├── pyproject.toml              # Build configuration and package metadata (pip install entry point)
+└── README.md</code></pre>
+<!-- ```text
+tomographer_beta/
+|-- runtime_script/
+|   |-- conf.ini                # Configuration file
+|   |-- tomo.py                 # Main code
+|   |-- tomo.ipynb              # Interactive notebook
+|-- precalculated_data/         # Downloaded precalculated files
+|-- README.md
+``` -->
+<p>The <code>precalculated_data</code> directory includes the default
+configuration with 40 tomographic bins. We also provide an extended
+version with 160 bins on Zenodo:</p>
+<pre class="text"><code>https://zenodo.org/records/20155554</code></pre>
+<p>Using the 160-bin configuration requires additional data downloads.
+These are automatically handled by the code. Note that <strong>not all
+files on Zenodo will be downloaded</strong>, only the required files
+based on the selected configuration.</p>
+<p>To download all precalculated files from Zenodo in one step and
+automatically organize them into the correct directory structure:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> importlib <span class="im">import</span> resources</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tomographer <span class="im">import</span> utils</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>filepath_handler <span class="op">=</span> utils.FilePathHandler()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>data_path <span class="op">=</span> resources.files(<span class="st">&quot;precalculated_data&quot;</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>filepath_handler.download_all()</span></code></pre></div>
+<hr />
+<h2 id="quick-start">Quick Start</h2>
+<p>Users will mainly interact with the configuration file
+<code>conf.ini</code>.</p>
+<ol type="1">
+<li><p>Modify the configuration file:</p>
+<pre class="text"><code>conf.ini</code></pre></li>
+<li><p>Run the pipeline:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tomo</span></span></code></pre></div>
+<p>If the configuration file is located in another directory, run:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tomo</span> <span class="at">--conf</span> /path/to/conf.ini</span></code></pre></div></li>
+</ol>
+<p>For users who would like to explore the code in more detail or
+visualize intermediate results, we also provide the notebook:</p>
+<pre class="text"><code>tomo.ipynb</code></pre>
+<hr />
+<h2 id="output">Output</h2>
+<p>Tomographer produces:</p>
+<ul>
+<li><p>Measurement file: <code>OUTPUT_FILENAME.fits</code></p></li>
+<li><p>Saved configuration file:
+<code>OUTPUT_FILENAME.ini</code></p></li>
+<li><p>Result plot: <code>OUTPUT_FILENAME.pdf</code></p></li>
+</ul>
