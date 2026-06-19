@@ -46,47 +46,28 @@ We also provide an extended version with 160 bins. Using the 160-bin configurati
 
 ## Quick Start
     
-<table >
+<table style="table-layout: fixed; width: 100%; border-collapse: collapse;">
 <tr>
-<td width="50%" style="vertical-align: top;"> 
-
-**First-time users**
-
----
-
-1. Go to one of the runtime directories within the downloaded package.
-   `tomographer/tomographer/runtime_script/`
-   `tomographer/tomographer/runtime_test/source_catalog/`
-   `tomographer/tomographer/runtime_test/intensity_map/`
-
-2. Modify the [configuration file](#configuration-file) `conf.ini`. It is recommended to start from one of the example directories (`source_catalog/` or `intensity_map/`), which include complete example configurations and test data.
-    
+<td width="50%" style="vertical-align: top; font-size: 14px; line-height: 1.4; padding: 0 10px 0 0; word-break: break-all; max-width: 50%;">
+<strong>First-time users</strong>
+<hr style="margin: 5px 0;">
+1. Go to one of the runtime directories within the downloaded package:<br>
+<code>runtime_script/</code><br>
+<code>runtime_test/source_catalog/</code><br>
+<code>runtime_test/intensity_map/</code><br><br>
+2. Modify the <a href="#configuration-file">configuration file</a> <code>conf.ini</code>. It is recommended to start from one of the example directories (<code>source_catalog/</code> or <code>intensity_map/</code>), which include complete example configurations and test data.<br><br>
 3. Run the pipeline from the directory to initialize the precalculated data path:
-
-    ```bash
-    tomo
-    ```
+<pre style="max-width: 100%; white-space: pre-wrap; word-break: break-all;"><code style="white-space: pre-wrap; word-break: break-all;">tomo</code></pre>
 </td>
-<td width="50%" style="vertical-align: top;">
-
-**Advanced users**
-
----
-
-Users will mainly interact with the [configuration file](#configuration-file) `conf.ini`.
-
-1. Modify the [configuration file](#configuration-file) `conf.ini` according to your needs.
-
+<td width="50%" style="vertical-align: top; font-size: 14px; line-height: 1.4; padding: 0 0 0 10px; word-break: break-all; max-width: 50%;">
+<strong>Advanced users</strong>
+<hr style="margin: 5px 0;">
+Users will mainly interact with the <a href="#configuration-file">configuration file</a> <code>conf.ini</code>.<br><br>
+1. Modify the <a href="#configuration-file">configuration file</a> <code>conf.ini</code> according to your needs.<br><br>
 2. Run the pipeline from the directory containing the configuration file:
-    ```bash
-    tomo
-    ```
-    <br> 
-    
-    If the configuration file is located in another directory or has a different name:
-    ```bash
-    tomo --conf /path/to/your/config/file
-    ```
+<pre style="max-width: 100%; white-space: pre-wrap; word-break: break-all;"><code style="white-space: pre-wrap; word-break: break-all;">tomo</code></pre>
+If the configuration file is located in another directory or has a different name:
+<pre style="max-width: 100%; white-space: pre-wrap; word-break: break-all;"><code style="white-space: pre-wrap; word-break: break-all;">tomo --conf /path/to/your/config/file</code></pre>
 </td>
 </tr>
 </table>
