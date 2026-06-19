@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Tomographer
 
 Tomographer is an an integrated clustering-redshift estimator designed to be fast, robust, and usable end-to-end by non-experts, while
@@ -10,7 +9,7 @@ For details of the methodology, see Chiang et al. (2026).
 
 ## Installation
 
-1. Fetch the repository from [Github].
+1. Fetch the repository from [Github](https://github.com/yuvoonng/tomographer).
 ```bash
 git clone 
 ```   
