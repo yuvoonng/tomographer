@@ -11,7 +11,7 @@ For details of the methodology, see Chiang et al. (2026).
 
 1. Fetch the repository from [Github](https://github.com/yuvoonng/tomographer).
 ```bash
-git clone 
+git clone git@github.com:yuvoonng/tomographer.git
 ```   
 
 2. Install the package
