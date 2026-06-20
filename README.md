@@ -166,7 +166,6 @@ filepath_handler = utils.FilePathHandler()
 filepath_handler.load_or_init_precaldata()
 filepath_handler.download_all()
 ```
-<br>
 
 Note: If the precalculated data path is not initialized first, run the above code from a runtime directory for initialization.
 </details>
