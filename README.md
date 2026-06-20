@@ -46,7 +46,7 @@ We also provide an extended version with 160 bins. Using the 160-bin configurati
 
 ## Quick Start
     
-<table style="table-layout: fixed; width: 100%; border-collapse: collapse;">
+<!-- <table style="table-layout: fixed; width: 100%; border-collapse: collapse;">
 <tr>
 <td width="50%" style="vertical-align: top; font-size: 14px; line-height: 1.4; padding: 0 10px 0 0; word-break: break-all; max-width: 50%;">
 <strong>First-time users</strong>
@@ -70,6 +70,32 @@ If the configuration file is located in another directory or has a different nam
 <pre style="max-width: 100%; white-space: pre-wrap; word-break: break-all;"><code style="white-space: pre-wrap; word-break: break-all;">tomo --conf /path/to/your/config/file</code></pre>
 </td>
 </tr>
+</table> -->
+
+<table>
+  <tr>
+    <th width="50%">First-time users</th>
+    <th width="50%">Advanced users</th>
+  </tr>
+  <tr>
+    <td>
+        1. Go to one of the runtime directories within the downloaded package:<br>
+        <code>runtime_script/</code><br>
+        <code>runtime_test/source_catalog/</code><br>
+        <code>runtime_test/intensity_map/</code><br><br>
+        2. Modify the <a href="#configuration-file">configuration file</a> <code>conf.ini</code>. It is recommended to start from one of the example directories (<code>source_catalog/</code> or <code>intensity_map/</code>), which include complete example configurations and test data.<br><br>
+        3. Run the pipeline from the directory to initialize the precalculated data path:
+        <pre style="max-width: 100%; white-space: pre-wrap; word-break: break-all;"><code style="white-space: pre-wrap; word-break: break-all;">tomo</code></pre>
+    </td>
+    <td>
+        Users will mainly interact with the <a href="#configuration-file">configuration file</a> <code>conf.ini</code>.<br><br>
+        1. Modify the <a href="#configuration-file">configuration file</a> <code>conf.ini</code> according to your needs.<br><br>
+        2. Run the pipeline from the directory containing the configuration file:
+        <pre style="max-width: 100%; white-space: pre-wrap; word-break: break-all;"><code style="white-space: pre-wrap; word-break: break-all;">tomo</code></pre>
+        If the configuration file is located in another directory or has a different name:
+        <pre style="max-width: 100%; white-space: pre-wrap; word-break: break-all;"><code style="white-space: pre-wrap; word-break: break-all;">tomo --conf /path/to/your/config/file</code></pre>
+    </td>
+  </tr>
 </table>
 
 At the *first* run, the code searches for the `precalculated_data` directory within the downloaded package and stores its path in 
