@@ -79,21 +79,23 @@ If the configuration file is located in another directory or has a different nam
   </tr>
   <tr>
     <td valign="top">
-      1. Go to one of the runtime directories within the downloaded package: <br>
+      <ol>
+      <li> Go to one of the runtime directories within the downloaded package: <br>
         <code>runtime_script/</code> <br>
         <code>runtime_test/source_catalog/</code> <br>
-        <code>runtime_test/intensity_map/</code> <br><br>
-      2. Modify the <a href="#configuration-file">configuration file</a> <code>conf.ini</code>. It is recommended to start from one of the example directories (<code>source_catalog/</code> or <code>intensity_map/</code>), which include complete example configurations and test data. <br><br>
-      3. Run the pipeline from the directory to initialize the precalculated data path: <br>
-      <pre><code>tomo</code></pre>
+        <code>runtime_test/intensity_map/</code> </li> <br>
+      <li> Modify the <a href="#configuration-file">configuration file</a> <code>conf.ini</code>. It is recommended to start from one of the example directories (<code>source_catalog/</code> or <code>intensity_map/</code>), which include complete example configurations and test data. </li>  <br>
+      <li> Run the pipeline from the directory to initialize the precalculated data path: <br>
+      <pre><code>tomo</code></pre> </li> </ol>
     </td>
     <td valign="top">
       Users will mainly interact with the <a href="#configuration-file">configuration file</a> <code>conf.ini</code>. <br><br>
-      1. Modify the <a href="#configuration-file">configuration file</a> <code>conf.ini</code> according to your needs. <br><br>
-      2. Run the pipeline from the directory containing the configuration file: <br>
-      <pre><code>tomo</code></pre>
+    <ol>
+      <li> Modify the <a href="#configuration-file">configuration file</a> <code>conf.ini</code> according to your needs. </li> <br>
+      <li> Run the pipeline from the directory containing the configuration file: <br>
+      <pre><code>tomo</code></pre> 
       If the configuration file is located in another directory or has a different name: <br>
-      <pre><code>tomo --conf /path/to/config</code></pre>
+      <pre><code>tomo --conf /path/to/config</code></pre> </li> </ol>
     </td>
   </tr>
 </table>
