@@ -132,7 +132,7 @@ We here provide descriptions for the `Basic Settings` section in the configurati
 **[2]** The map files are read with `hp.read_map()`, so please follow the expected format accordingly. <br>
 **[3]** Replace `1` with other integers to specify additional spatial weight map files.
 
-
+<br>
 
 For advanced configurations, users can modify the settings in the `Advanced Settings` section. This includes:
 - **Template cleaning**: Regress out a list of foreground templates for intensity maps
