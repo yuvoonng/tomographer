@@ -1,2 +1,4 @@
 *.fits filter=lfs diff=lfs merge=lfs -text
 *.parquet filter=lfs diff=lfs merge=lfs -text
+tomographer/precalculated_data/* filter=lfs diff=lfs merge=lfs -text
+tomographer/precalculated_data/** filter=lfs diff=lfs merge=lfs -text
