@@ -90,7 +90,7 @@ If the configuration file is located in another directory or has a different nam
       2. Run the pipeline from the directory containing the configuration file: <br>
       <pre><code>tomo</code></pre>
       If the configuration file is located in another directory or has a different name: <br>
-      <pre><code>tomo --conf /path/to/your/config/file</code></pre>
+      <!-- <pre><code>tomo --conf /path/to/your/config/file</code></pre> -->
     </td>
   </tr>
 </table>
