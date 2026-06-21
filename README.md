@@ -137,7 +137,7 @@ We here provide descriptions for the `Basic Settings` section in the configurati
 For advanced configurations, users can modify the settings in the `Advanced Settings` section. This includes:
 - **Template cleaning**: Regress out a list of foreground templates for intensity maps
 - **High-pass filtering**: Suppress large-scale Galactic foregrounds and survey systematics
-- **Masking**: Rectangular cut and built-in masks
+- **Masking**: Rectangular cut and [built-in masks](#faq)
 
 
 ---
