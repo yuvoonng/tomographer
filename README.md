@@ -34,7 +34,7 @@ tomographer/
 │   ├── runtime_test/
 │   │   ├── source_catalog/      # Example for running source catalog
 │   │   └── intensity_map/       # Example for running intensity map
-│   └── precalculated_data/      # Downloaded precalculated files
+│   └── precalculated_data/      # Precomputed data for fast, pair-less correlations
 ├── pyproject.toml               # Build configuration and package metadata (pip install entry point)
 └── README.md
 ```
