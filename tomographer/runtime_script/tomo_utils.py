@@ -302,7 +302,7 @@ class FilePathHandler():
         zenodo_id = file_on_zenodo.get(path.name)
         if not path.is_file():
             if zenodo_id and (path.parent.name=='160log1pzbins' or '160log1pzbins' in path.name):
-                logging.error(f'The file does not exist and will be downloaded: {path}')
+                logging.info(f'The file does not exist and will be downloaded: {path}')
                 self.need_download[zenodo_id] = path
                 return self
             raise FileNotFoundError(
@@ -316,7 +316,7 @@ class FilePathHandler():
             with open(path, "rb") as f:
                 file_md5 = hashlib.file_digest(f, "md5").hexdigest()
             if file_md5!=zenodo_id:
-                logging.error(f'The file does not match that on Zenodo and will be downloaded: {path}')
+                logging.info(f'The file does not match that on Zenodo and will be downloaded: {path}')
                 self.need_download[file_on_zenodo[path.name]] = path
                 return self
             else: # If matches, remove from the download list to avoid repeating downloads
