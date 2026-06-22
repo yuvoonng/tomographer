@@ -8,8 +8,9 @@ For details of the methodology, see Chiang et al. (2026).
 ---
 
 ## Installation
+0. Install [Git LFS](https://git-lfs.com/) to enable downloading large files (~3 GB).
 
-1. Fetch the repository from [Github](https://github.com/yuvoonng/tomographer).
+1. Clone the repository from [Github](https://github.com/yuvoonng/tomographer).
 ```bash
 git clone https://github.com/yuvoonng/tomographer.git
 ```   
