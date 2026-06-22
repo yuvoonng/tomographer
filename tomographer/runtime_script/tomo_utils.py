@@ -112,7 +112,7 @@ class ConfigChecker():
             val = self.config.getfloat('Test Sample', 'beam_fwhm_arcmin')
             if val>=1.24:
                 if (self.run_type=='quick') and (val>=3.):
-                    raise FileNotFoundError('Quick run does not provide files with physical scale larger than 0.5 Mpc.')
+                    raise FileNotFoundError('Quick run does not provide files with physical scale larger than 0.5 Mpc. Try run_type = fiducial.')
                 self.beam_fwhm_arcmin = val
             else:
                 logging.warning(f'Beam FWHM {val} increased to 1.24 arcmin, the effective NS2048 pixel size.')
