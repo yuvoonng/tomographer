@@ -194,7 +194,7 @@ def main():
         pass
 
     except Exception as e:
-        raise ValueError("Please confirm if your files are compatible with the code and matched with the input test_type.") from e
+        raise ValueError("Please confirm if the test files are compatible with the code and matched with the input test_type.") from e
 
     logging.info('Successfully read test file(s).')
     
