@@ -52,7 +52,7 @@ The `precalculated_data` directory includes a lightweight configuration with 40 
 <td width="50%" style="vertical-align: top; font-size: 14px; line-height: 1.4; padding: 0 10px 0 0; word-break: break-all; max-width: 50%;">
 <strong>First-time users</strong>
 <hr style="margin: 5px 0;">
-1. Go to one of the runtime directories within the downloaded package:<br>
+1. Go to one of the runtime directories:<br>
 <code>runtime_script/</code><br>
 <code>runtime_test/source_catalog/</code><br>
 <code>runtime_test/intensity_map/</code><br><br>
