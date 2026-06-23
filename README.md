@@ -4,7 +4,7 @@ Tomographer is an integrated, end-to-end clustering-redshift estimator designed 
 
 It performs redshift inference on arbitrary extragalactic datasets using spatial cross-correlations with a fixed set of spectroscopic reference samples. It accepts either a <ins>source catalog</ins> (a list of sky coordinates) or a HEALPix <ins>intensity map</ins>, and returns the bias-weighted redshift distribution of the input, $b(z)\ {\rm d}N/{\rm d}z$ or $b(z)\ {\rm d}I/{\rm d}z$, in fine redshift bins over $0 < z \lesssim 4$.
 
-For details of the methodology, see Chiang et al. (2026).
+For details, see Chiang et al. (2026).
 
 ---
 
