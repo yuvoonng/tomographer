@@ -1,7 +1,7 @@
 # Tomographer
 
-Tomographer is an an integrated clustering-redshift estimator designed to be fast, robust, and usable end-to-end by non-experts, while
-retaining science-grade accuracy for survey collaborations. \
+Tomographer is an integrated, end-to-end clustering-redshift estimator designed to make clustering-redshift analysis fast, robust, and accessible to non-experts, while retaining science-grade accuracy for astrophysical and cosmological applications. \
+It infers the redshift distribution of an arbitrary large-scale structure tracer through spatial cross-correlations with a spectroscopic reference sample. \
 It accepts either a <ins>source catalog</ins> (a list of sky coordinates) or a HEALPix <ins>intensity map</ins>, and returns the bias-weighted redshift distribution of the input, $b(z)\ {\rm d}N/{\rm d}z$ or $b(z)\ {\rm d}I/{\rm d}z$, in fine redshift bins over $0 < z \lesssim 4$.\
 For details of the methodology, see Chiang et al. (2026).
 
