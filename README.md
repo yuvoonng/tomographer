@@ -41,8 +41,7 @@ tomographer/
 └── README.md
 ```
 
-The `precalculated_data` directory includes the default configuration with 40 tomographic bins.
-We also provide an extended version with 160 bins. Using the 160-bin configuration requires additional data downloads from [Zenodo](https://zenodo.org/records/20155554). These downloads are triggered automatically by the code based on the selected configuration, so users do not need to download them manually.
+The `precalculated_data` directory includes a lightweight 40-bin configuration for quick installation and testing. For science analyses, we recommend the extended 160-bin configuration. The additional data files are hosted on [Zenodo](https://zenodo.org/records/20155554) and downloaded automatically when needed, so no manual download is required.
 
 ---
 
