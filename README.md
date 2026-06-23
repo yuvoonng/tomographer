@@ -41,7 +41,7 @@ tomographer/
 └── README.md
 ```
 
-The `precalculated_data` directory includes a lightweight 40-bin configuration for quick installation and testing. For science analyses, we recommend the extended 160-bin configuration. The additional data files are hosted on [Zenodo](https://zenodo.org/records/20155554) and downloaded automatically when needed, so no manual download is required.
+The `precalculated_data` directory includes a lightweight configuration with 40 redshift bins for quick installation and testing. For science analyses, we recommend the extended 160-bin configuration. The additional data files are hosted on [Zenodo](https://zenodo.org/records/20155554) and downloaded automatically when needed, so no manual download is required.
 
 ---
 
