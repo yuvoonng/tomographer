@@ -11,13 +11,13 @@ For details, see Chiang et al. (2026).
 
 ## Installation
 0. Git Large File Storage (LFS): 
-Skip if installed. Install [Git LFS](https://git-lfs.com/) to clone large files (~3 GB in the core repository). Example using `conda`:
+Skip if installed. Otherwise, install [Git LFS](https://git-lfs.com/) to enable cloning large files. Example using `conda`:
 ```bash
 conda install -c conda-forge git-lfs
 git lfs install
 ```  
 
-1. Clone [Tomographer](https://github.com/yuvoonng/tomographer) from Github.
+1. Clone [Tomographer](https://github.com/yuvoonng/tomographer)(~3 GB) from Github.
 ```bash
 git clone https://github.com/yuvoonng/tomographer.git
 ```   
