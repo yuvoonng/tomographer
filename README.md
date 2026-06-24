@@ -17,7 +17,7 @@ conda install -c conda-forge git-lfs
 git lfs install
 ```  
 
-1. Clone Tomographer from [Github](https://github.com/yuvoonng/tomographer).
+1. Clone [Tomographer](https://github.com/yuvoonng/tomographer) from Github.
 ```bash
 git clone https://github.com/yuvoonng/tomographer.git
 ```   
