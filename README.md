@@ -10,7 +10,7 @@ For details, see Chiang et al. (2026).
 ---
 
 ## Installation
-0. Git LFS: Skip this step if it is already installed. Otherwise, install [Git LFS](https://git-lfs.com/) to enable cloning the large files (~3 GB) required by the core repository. Example installation using `conda`:
+0. Git Large File Storage (LFS): Skip if already installed. Install [Git LFS](https://git-lfs.com/) to clone the large files (~3 GB) in the core repository. Example using `conda`:
 ```bash
 conda install -c conda-forge git-lfs
 git lfs install
