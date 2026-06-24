@@ -10,7 +10,7 @@ For details, see Chiang et al. (2026).
 ---
 
 ## Installation
-0. Install [Git LFS](https://git-lfs.com/) to enable downloading large files (~3 GB).
+0. Download and install [Git LFS](https://git-lfs.com/) to enable downloading large files for the core repository (~3 GB). One can also use conda.
 
 1. Clone the repository from [Github](https://github.com/yuvoonng/tomographer).
 ```bash
