@@ -10,7 +10,7 @@ For details, see Chiang et al. (2026).
 ---
 
 ## Installation
-0. Git Large File Storage: 
+0. Git Large File Storage (LFS): 
 Skip if installed. Install [Git LFS](https://git-lfs.com/) to clone large files (~3 GB in the core repository). Example using `conda`:
 ```bash
 conda install -c conda-forge git-lfs
