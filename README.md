@@ -21,11 +21,16 @@ git lfs install
 git clone https://github.com/yuvoonng/tomographer.git
 ```   
 
-2. Install the package
+2. Install the package.
 ```bash
 cd tomographer
 pip install .
-```    
+```
+
+3. Initialize the code.   
+```bash
+tomo init
+```
 
 ---
 
@@ -115,9 +120,32 @@ We here provide descriptions for the `Basic Settings` section in the configurati
 <br>
 
 For advanced configurations, users can modify the settings in the `Advanced Settings` section. This includes:
-- **Template cleaning**: Regress out a list of foreground templates for intensity maps
-- **High-pass filtering**: Suppress large-scale Galactic foregrounds and survey systematics
-- **Masking**: Rectangular cut and [built-in masks](#faq)
+<details> <summary> <strong> Template cleaning </strong>: Regress out a list of foreground templates for intensity maps </summary>
+<ul>
+<li> HI </li>
+<li> CSFD </li>
+</ul>
+</details>
+<details> <summary> <strong> High-pass filtering</strong>: Suppress large-scale Galactic foregrounds and survey systematics </summary>
+<ul>
+ <li> 2&deg; </li>
+ <li> 4&deg; </li>
+ <li> 8&deg; </li>
+ <li> 16&deg; </li>
+ <li> inf (no filtering) </li>
+</ul>
+</details>
+<details> <summary> <strong> Masking </strong>: Rectangular cut and built-in masks </summary>
+<ul> 
+<li> <code>CSFD_cosmology_area</code>: Dust mask based on the corrected SFD map of <a href="https://doi.org/10.3847/1538-4357/acf4a1">Chiang (2023)</a></li>
+<li> <code>fsky_[25,50,75]_low_dust</code>: Galactic-latitude cuts (|b| > 25°, 50°, 75°) </li>
+<li> <code>globular_clusters_veto</code>: Globular clusters </li>
+<li> <code>LMC_SMC_veto</code>: Magellanic Clouds </li>
+<li> <code>nearby_galaxy_clusters_veto</code>: Nearby galaxy clusters </li>
+<li> <code>Planck_point_source_veto</code>: Planck point sources </li>
+<li> <code>SDSS_veto</code>: SDSS footprints </li>
+</ul>
+</details>
 
 
 ---
@@ -155,19 +183,6 @@ Please check whether the precalculated data path has been initialized by verifyi
 
 If the file does not exist, refer to <strong> First-time users</strong> in [Quick Start](#quick-start).
 <br> If it exists, ensure that the path stored inside it correctly points to the location of the precalculated data files.
-</details>
-
-<details> <summary> <strong> What built-in masks does Tomographer provide? </strong> </summary>
-We provide the following built-in masks that users can optionally apply:
-<ul>
-<li> <code>CSFD_cosmology_area</code>: Dust mask based on the corrected SFD map of <a href="https://doi.org/10.3847/1538-4357/acf4a1">Chiang (2023)</a></li>
-<li> <code>fsky_[25,50,75]_low_dust</code>: Galactic-latitude cuts (|b| > 25°, 50°, 75°) </li>
-<li> <code>globular_clusters_veto</code>: Globular clusters </li>
-<li> <code>LMC_SMC_veto</code>: Magellanic Clouds </li>
-<li> <code>nearby_galaxy_clusters_veto</code>: Nearby galaxy clusters </li>
-<li> <code>Planck_point_source_veto</code>: Planck point sources </li>
-<li> <code>SDSS_veto</code>: SDSS footprints </li>
-</ul>
 </details>
 
 <details>
