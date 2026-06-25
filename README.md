@@ -57,7 +57,22 @@ The `precalculated_data` directory includes a lightweight configuration with 40 
 
 ## Quick Start
 
-<table>
+Users will mainly interact with the [configuration file](#configuration-file) `conf.ini`.
+
+1. Edit [configuration file](#configuration-file) `conf.ini` as needed. <br>
+   First-time users should start with `source_catalog/` or `intensity_map/`, which include complete example configurations and test data.
+
+2. Run the pipeline from the directory containing the configuration file: <br>
+   ```bash
+   tomo
+   ```
+   
+   If the configuration file is located in another directory or has a different name: <br>
+   ```bash
+   tomo --conf /path/to/config
+   ```
+
+<!-- <table>
   <tr>
     <th width="50%">First-time users</th>
     <th width="50%">Advanced users</th>
@@ -83,10 +98,7 @@ The `precalculated_data` directory includes a lightweight configuration with 40 
       <pre><code>tomo --conf /path/to/config</code></pre> </li> </ol>
     </td>
   </tr>
-</table>
-
-At the *first* run, the code searches for the `precalculated_data` directory within the downloaded package and stores its path in 
-`~/.precal_data_path.toml`. If the `precalculated_data` directory is later moved to another location, please update the path file accordingly. Otherwise, the code will not be able to locate the directory.
+</table> -->
 
 For users who would like to explore the code in more detail or visualize intermediate results, we also provide the notebook:
 ```text
@@ -174,15 +186,38 @@ filepath_handler = utils.FilePathHandler()
 filepath_handler.load_or_init_precaldata()
 filepath_handler.download_all()
 ```
-
-Note: If the precalculated data path is not initialized first, run the above code from a runtime directory for initialization.
 </details>
 
 <details> <summary> <strong> Why do I get <code>FileNotFoundError: precalculated_data not found.</code>? </strong> </summary>
-Please check whether the precalculated data path has been initialized by verifying the existence of the file <code>~/.precal_data_path.toml</code>. 
 
-If the file does not exist, refer to <strong> First-time users</strong> in [Quick Start](#quick-start).
-<br> If it exists, ensure that the path stored inside it correctly points to the location of the precalculated data files.
+ During initialization, the code searches for the <code>precalculated_data</code> directory within the downloaded package and stores its path in 
+<code>~/.tomographer_path.toml</code>
+
+First, verify that the initialization completed successfully by checking whether this file exists. If it does not, run the following command from within the downloaded package:
+ ```bash
+ tomo init
+ ```
+
+If the file exists, ensure that the stored path correctly points to the location of the <code>precalculated_data</code> directory. <br>
+If the <code>precalculated_data</code> directory is later moved to a different location, either update the path stored in <code>~/.tomographer_path.toml</code> or rerun the initialization. Otherwise, Tomographer will not be able to locate the precalculated data files.
+
+</details>
+
+<details>
+<summary><strong> Can I rebin my measurements into fewer bins to improve the signal-to-noise ratio?</strong></summary>
+
+Yes. To rebin a measurement into a smaller number of bins, run:
+```bash
+tomo rebin YOUR_MEASUREMENT_FILE.fits BIN_NUMBER
+```
+
+e.g. To rebin the measurements in <code>out.fits</code> into 20 bins:
+```bash
+tomo rebin out.fits 20
+```
+
+The rebinned measurements will be saved as <code>ORIGINAL_FILENAME_rebin{BIN_NUMBER}.fits</code> (e.g. <code>out_rebin20.fits</code>)
+
 </details>
 
 <details>
