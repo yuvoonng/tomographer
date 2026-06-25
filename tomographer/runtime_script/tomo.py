@@ -1060,8 +1060,11 @@ def tomo(args):
     
     # Create a copy of the configuration file using the same output filename
     hdul.writeto(fits_path, overwrite=True)
-    shutil.copy2(f"{config_filename}", ini_path)
-    
+    try:
+        shutil.copy2(f"{config_filename}", ini_path)
+    except:
+        pass
+
     
     # # Result visualisation
     
