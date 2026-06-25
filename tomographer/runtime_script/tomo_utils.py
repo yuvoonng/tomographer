@@ -461,7 +461,7 @@ class FilePathHandler():
     def check_file_default(self):
         self.load_or_init_precaldata()
         root_path = self.home_dir
-        logging.info("Checking file integrity ...")
+        logging.info("Checking file integrity...")
         
         for relative_path in self.file_default.keys():
             absolute_path = root_path/relative_path
