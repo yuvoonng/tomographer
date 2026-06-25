@@ -27,23 +27,71 @@ import difflib
 import shutil
 import psutil
 import time
+import sys
 import os
 import gc
 
 from . import tomo_utils as utils
-    
-def main():
 
-    start = time.time()
-    
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--conf', type=str, default='conf.ini', help='Path to the config file')
-    args = parser.parse_args()
-
-    logging.basicConfig(
+logging.basicConfig(
         level=logging.INFO,           
         format="%(asctime)s - %(levelname)s - %(message)s"
-    )
+)
+
+def main():
+    
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest="command", required=False)
+    
+    init_parser = subparsers.add_parser("init", help="Initialize a new project")
+    rebin_parser = subparsers.add_parser("rebin", help="Rebin measurement files")
+
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "rebin":
+            rebin_parser.add_argument("measurement_file", type=str, help="Path to the measurement file")
+            rebin_parser.add_argument("bin_number", type=int, help="The rebinning number")
+        args = parser.parse_args()
+    else:
+        parser.add_argument('--conf', type=str, default='conf.ini', help='Path to config file')
+        args = parser.parse_args()
+
+    if args.command == "init":
+        init(args)
+    elif args.command == "rebin":
+        rebin(args)
+    else:
+        tomo(args)
+
+def init(args):
+    filepath_handler = utils.FilePathHandler()
+    filepath_handler.init_precaldata_path()
+    filepath_handler.check_file_default()
+
+    logging.info("Initialization succeeded!")
+
+def rebin(args):
+    measurement_file, bin_number = args.measurement_file, args.bin_number
+    w = Table.read(measurement_file)
+
+    if (bin_number<=0) or (bin_number>len(w)):
+        raise ValueError('Rebin number must be between 0 and the original bin number.')
+
+    rebinned_z_edges, rebinned_z_ctrs = utils.z_binning_log1pz(0., 4.2, bin_number)
+    rebinned_w = utils.z_rebin_tomo_out(w, rebinned_z_edges, rebinned_z_ctrs)
+
+    hdr = fits.Header()
+    primary_hdu = fits.PrimaryHDU(header=hdr)      
+    hdu_w = fits.BinTableHDU(rebinned_w) 
+    hdul = fits.HDUList([primary_hdu, hdu_w])
+    
+    output_filename = measurement_file.removesuffix('.fits') + f'_rebin{bin_number}.fits'
+    hdul.writeto(output_filename, overwrite=True)
+
+    logging.info(f'Rebin sucessfully. Check: {output_filename}')
+
+def tomo(args):
+
+    start = time.time()
     
     process = psutil.Process(os.getpid())
     def log_memory():

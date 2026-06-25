@@ -165,7 +165,8 @@ class ConfigChecker():
 
         # Check output filename
         if self.output_filename=='':
-            raise NameError('Please at least input an output filename.')
+            logging.warning("Set output filename to 'out'.")
+            self.output_filename = Path('out')
         else:
             self.output_filename = Path(self.output_filename)
 
@@ -306,10 +307,10 @@ class FilePathHandler():
                 self.need_download[zenodo_id] = path
                 return self
             raise FileNotFoundError(
-                    f"No such file: {path.resolve()}\n"
+                    f"precalculated_data not found: {path.resolve()}\n"
                     f"Please first confirm if the file exists.\n"
                     f"To fix this, either move the file to that location or update the path in: "
-                    f"{Path.home() / '.precal_data_path.toml'}"
+                    f"{Path.home() / '.tomographer_path.toml'}"
                 )
 
         if zenodo_id and (path.parent.name=='160log1pzbins' or '160log1pzbins' in path.name):
@@ -411,11 +412,69 @@ class FilePathHandler():
 
             
     ##### Loading or initializing ``self.home_dir`` #####
-    PRECAL_DATA_PATH = Path.home() / ".precal_data_path.toml" # Precalculated Data Path is stated at home directory
+
+    file_default = {
+        'bootstrapping/N_repeat_block_ID_1000BS_default_valid_pixels_flatten.npy': '8f79da4e509d8ff6783a8234df270ddb82473dbb8445a7d9df54ea1781860b9d',
+        'bootstrapping/N_repeat_block_ID_100BS_default_valid_pixels_flatten.npy': 'f43fd498edd94c3c48dee020ef6544cd491633b1d5512e78c3d072cc53079f63',
+        'references/sdss_ref_all.fits': '10a66692c1b541be81aa346b34500c89b9a760a09c3a75ca720f6edd5e3d7928',
+        'templates/NHI_ns2048_nest.fits': 'c582be84ac54db4be2752f7e90d0ae64723bf81001b4e7ef40d8d5a0f3030fd2',
+        'templates/CSFD_ebv_ns2048_nest.fits': '1675a30f6eb81d238e4e6b27ac6d78567b4ce111d4500e41a9bde0e84535d869',
+        'masks/LMC_SMC_veto.fits': '90ed3956278ee8ead25c7cb297ad91f8ff1f4fd3fac8f7e0128a13c3af9d0044',
+        'masks/Planck_point_source_veto.fits': 'c5fcd76dee621465303c99879d2f17a9362d719a7ef6f88df9a1caf0e494dde2',
+        'masks/fsky_75_low_dust.fits': '6712e73bb9cdcc41c2aea5e5239ba2f6c41cebdd4c13469edb6797aca4fad7df',
+        'masks/CSFD_cosmology_area.fits': 'd7b1adda12779d9a5deacefca1f1615cf0f7b80111d065e5c32e116625f6348f',
+        'masks/fsky_25_low_dust.fits': 'db80780898264ed144b90fc90f28f0cac49dca492ce025d39b08d7dc89f257f7',
+        'masks/globular_clusters_veto.fits': '1a2ff0ca1ba4f6c613e482b6777b135e743d5861dc105f0610a3df1b421bccbc',
+        'masks/nearby_galaxy_clusters_veto.fits': '1b2714b2001eb2c0e48d9def86311e9b2c4577d90d1139a5153fac8fbada012e',
+        'masks/fsky_50_low_dust.fits': 'e9345a95ffb28ba1c523b5f0b9cabbf7d3b62628aa8a470e40a15c1a18681866',
+        'masks/SDSS_veto.fits': '201e23c9ca5576263c233c7a7bdaa0cac4e54212097909ebc93c6c84d5585f4b',
+        'references/40log1pzbins/sdss_lss_plus_data_z_maps.pddf.parquet': '4bd31e560dd7317d997912c162f12772423c1a1385b5c87b12b237e9bbf70020',
+        'references/40log1pzbins/b_ref_sdss_lss_plus_0.5-10Mpch_gamma-0.8.fits': '634baa5637d658a35a7ae83acf30ce7ea5c0539065ae4e7ccc86b1c205d18d05',
+        'references/footprint/sdss_ref_footprint_nest2048.fits': '095ec6ef2c4fb4f9baa2e40311b50af9b158e45eca42f2bed3720dc09575ee40',
+        'references/footprint/valid_pixel_ids_nest2048.npz': '65e33312de1f08805d49702ce93a2389eb9b65fee7d7f4d6277c751494d1c119',
+        'references/footprint/valid_pixels_nest2048.fits': 'f627847d824f934b0a99ea9a91774d6a947af3c7255cf754b8597992e79f15d6',
+        'cosmology/planck_2018/wmbar_prp_0.5-10Mpch_gamma-0.8_15.0degtmax_40log1pzbins_multi_beam_filtering.fits': 'b115309d3e094ebd1f679353be49f05d301a9baa60c8c102ceabc259a1996c3d',
+        'cosmology/planck_2018/cosmology.txt': '6a637c35dbe239e5c682064c82e42587f7217ac7a184c95d535c42262cb87a25',
+        'activation_maps/40log1pzbins/sdss_lss_plus_data_0.5-10Mpch_gamma-0.8.pddf.parquet': 'bc84fd892df86d2149dbfc8c820f44d911bfb6afe3bb3d4cdbba422e5e28c580',
+        'activation_maps/40log1pzbins/sdss_lss_plus_rand_0.5-10Mpch_gamma-0.8.pddf.parquet': '3c86e1f232c4cb0b4315722c94e44c7c897bb087f2e1769d2f0db3081e273c2b',
+        }
+
+    def verify_file_default(self, file_path, expected_sha256):
+        sha256_hash = hashlib.sha256()
+        
+        # Read the file in chunks so it doesn't crash your RAM with large files
+        try:
+            with open(file_path, "rb") as f:
+                for byte_block in iter(lambda: f.read(4096), b""):
+                    sha256_hash.update(byte_block)
+            
+            calculated_hash = sha256_hash.hexdigest()
+            if calculated_hash != expected_sha256.lower():
+                raise self.DownloadError(f"The precalculated data file is corrupted: {file_path}\n"
+                                         "Please re-download. Did you install Git LFS to enable cloning large files?")
+            return calculated_hash == expected_sha256.lower()
+            
+        except FileNotFoundError as e:
+            raise FileNotFoundError(f'The precalculated data file is not found: {file_path}\n'
+                                    'Please re-download. Did you install Git LFS to enable cloning large files?')
+
+    def check_file_default(self):
+        self.load_or_init_precaldata()
+        root_path = self.home_dir
+        logging.info("Checking file integrity ...")
+        
+        for relative_path in self.file_default.keys():
+            absolute_path = root_path/relative_path
+            file_default_indict = self.file_default.get(str(relative_path))
+            file_hash = self.verify_file_default(absolute_path, file_default_indict)
+
+        
+    PRECAL_DATA_PATH = Path.home() / ".tomographer_path.toml" # Precalculated Data Path is stated at home directory
     def detect_precaldata_path(self):
         # auto-detect location
         candidates = [
             Path("./precalculated_data"),
+            Path("./tomographer/precalculated_data"),
             Path("../precalculated_data"),
             Path("../../precalculated_data"),
         ]
@@ -439,19 +498,19 @@ class FilePathHandler():
         with open(FilePathHandler.PRECAL_DATA_PATH, "wb") as f:
             tomli_w.dump(config, f)
     
-        logging.info(f"Initializing precalculated data path to {FilePathHandler.PRECAL_DATA_PATH}")
+        logging.info(f"Initializing precalculated data path to {FilePathHandler.PRECAL_DATA_PATH}...")
 
     def load_or_init_precaldata(self):
         if not FilePathHandler.PRECAL_DATA_PATH.exists():
             self.init_precaldata_path()
             
         with open(FilePathHandler.PRECAL_DATA_PATH, "rb") as f:
-            logging.info(f"Reading precalculated data path at {FilePathHandler.PRECAL_DATA_PATH}")
+            logging.info(f"Reading precalculated data path at {FilePathHandler.PRECAL_DATA_PATH}...")
             libload = tomllib.load(f)
             
             precal_data_path = Path(libload['data']['precalculated_data_path'])
-            if precal_data_path != self.detect_precaldata_path():
-                self.init_precaldata_path()
+            # if precal_data_path != self.detect_precaldata_path():
+            #     self.init_precaldata_path()
 
             self.home_dir = precal_data_path
             
