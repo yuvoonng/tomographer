@@ -65,8 +65,8 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
 2. Run the pipeline from the directory containing the configuration file:
 <table>
   <tr>
-    <th width="50%">Command mode</th>
-    <th width="50%">Interactive mode</th>
+    <th width="50%">Command-line mode</th>
+    <th width="50%">Notebook mode</th>
   </tr>
   <tr>
     <td valign="top">
