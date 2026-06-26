@@ -592,25 +592,43 @@ def add_GLON_GLAT(cat):
     Returns:
         cat (astropy Table): the input catalog with Galactic l, b ('GLON', 'GLAT' in degree) added
     """
-    if ('GLON' in cat.colnames) & ('GLAT' in cat.colnames):
-        pass
-    elif ('glon' in cat.colnames) & ('glat' in cat.colnames):
-        cat.rename_column('glon', 'GLON')
-        cat.rename_column('glat', 'GLAT')
-    elif ('l' in cat.colnames) & ('b' in cat.colnames):
-        cat.rename_column('l', 'GLON')
-        cat.rename_column('b', 'GLAT')
-    else:
-        if 'dec' in cat.colnames:
-            c_icrs = SkyCoord(ra=np.array(cat['ra'])*u.degree, dec=np.array(cat['dec'])*u.degree, frame='icrs')
-        elif 'Dec' in cat.colnames:
-            c_icrs = SkyCoord(ra=np.array(cat['RA'])*u.degree, dec=np.array(cat['Dec'])*u.degree, frame='icrs')
-        elif 'DEC' in cat.colnames:
-            c_icrs = SkyCoord(ra=np.array(cat['RA'])*u.degree, dec=np.array(cat['DEC'])*u.degree, frame='icrs')
+    col_names_lower = [col.lower() for col in cat.colnames]
+
+    # Check for Galactic coordinates (GLON/GLAT) in any case combination
+    if 'glon' in col_names_lower and 'glat' in col_names_lower:
+        actual_glon = cat.colnames[col_names_lower.index('glon')]
+        actual_glat = cat.colnames[col_names_lower.index('glat')]
+        
+        if actual_glon != 'GLON':
+            cat.rename_column(actual_glon, 'GLON')
+        if actual_glat != 'GLAT':
+            cat.rename_column(actual_glat, 'GLAT')
+    
+    # Check for Galactic coordinates alternative (L/B) in any case combination
+    elif 'l' in col_names_lower and 'b' in col_names_lower:
+        actual_l = cat.colnames[col_names_lower.index('l')]
+        actual_b = cat.colnames[col_names_lower.index('b')]
+        
+        cat.rename_column(actual_l, 'GLON')
+        cat.rename_column(actual_b, 'GLAT')
+    
+    # Check for Equatorial coordinates (RA/DEC) in any case combination
+    elif 'ra' in col_names_lower and 'dec' in col_names_lower:
+        actual_ra = cat.colnames[col_names_lower.index('ra')]
+        actual_dec = cat.colnames[col_names_lower.index('dec')]
+        
+        c_icrs = SkyCoord(
+            ra=np.array(cat[actual_ra]) * u.degree, 
+            dec=np.array(cat[actual_dec]) * u.degree, 
+            frame='icrs'
+        )
         
         c_galactic = c_icrs.transform_to('galactic')
         cat['GLON'] = c_galactic.l.degree
         cat['GLAT'] = c_galactic.b.degree
+
+    else:
+        raise ValueError('At least have the columns (GLAT,GLON), (l,b) or (RA,DEC).')
     return 0
 
 def add_hpid(cat, nside = 2048, nest=True):
