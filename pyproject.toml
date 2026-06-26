@@ -7,7 +7,7 @@ authors = [
 ]
 description = "Redshift Distribution Inference for Source Catalogs and Intensity Maps"
 readme = "README.md"
-requires-python = ">= 3"
+requires-python = ">= 3.11"
 dependencies = [
     "numpy",
     "numexpr",
