@@ -47,7 +47,7 @@ class ConfigChecker():
         self.filter_fwhm_deg = self.config.get('Test Sample Processing', 'filter_fwhm_deg', fallback='').lower()
         self.N_BS = config.getint('Error Estimation', 'N_BS')
         self.N_prl = 4
-        self.output_filename = self.config.get('Output', 'filename')
+        self.output_filename = self.config.get('Output', 'output_prefix')
 
     def check_all(self):
         self.check_reference_sample()
@@ -165,10 +165,10 @@ class ConfigChecker():
 
         # Check output filename
         if self.output_filename=='':
-            logging.warning("Set output filename to 'out'.")
-            self.output_filename = Path('out')
+            logging.warning("Set output prefix to 'out'.")
+            self.output_filename = 'out'
         else:
-            self.output_filename = Path(self.output_filename)
+            self.output_filename = self.output_filename
 
     def check_test_sample_processing(self):
         # Check template_cleaning

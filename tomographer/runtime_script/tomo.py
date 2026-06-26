@@ -246,7 +246,7 @@ def tomo(args):
         pass
 
     except Exception as e:
-        raise ValueError("Please confirm if the test files are compatible with the code and matched with the input test_type.") from e
+        raise ValueError("Failed to read the test file. Please ensure that the file is in the correct format and matches the `test_type`.") from e
 
     logging.info('Successfully read test file(s).')
     
@@ -1049,21 +1049,16 @@ def tomo(args):
     
     # Write to file
     output_filename = config_par.output_filename
-    
-    base_name = output_filename.stem
-    dest_dir = output_filename.parent
-    dest_dir.mkdir(exist_ok=True)
-    
-    fits_path = dest_dir / f"{base_name}.fits"
-    ini_path = dest_dir / f"{base_name}.ini"
-    fig_path = dest_dir / f"{base_name}.pdf"
+
+    fits_path = Path(output_filename + "_ddz.fits")
+    ini_path = Path(output_filename + "_conf.ini")
+    fig_path = Path(output_filename + "_ddz.pdf")
     
     # Create a copy of the configuration file using the same output filename
+    fits_path.parent.mkdir(parents=True, exist_ok=True)
+    
     hdul.writeto(fits_path, overwrite=True)
-    try:
-        shutil.copy2(f"{config_filename}", ini_path)
-    except:
-        pass
+    shutil.copy2(f"{config_filename}", ini_path)
 
     
     # # Result visualisation
@@ -1124,9 +1119,9 @@ def tomo(args):
     plt.savefig(f"{fig_path}", dpi=DPI, bbox_inches='tight', pad_inches=0.02)
 
     logging.critical("Files saved:\n"
-                    f"{fits_path.resolve()}\n"
-                    f"{ini_path.resolve()}\n"
-                    f"{fig_path.resolve()}")
+                    f"{fits_path}\n"
+                    f"{ini_path}\n"
+                    f"{fig_path}")
     
     end = time.time()
     logging.critical('\n' + '='*40 + '\nDURATION: {:.2f} minutes to finish.\n'.format((end-start)/60) + '='*40)
