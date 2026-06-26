@@ -62,48 +62,24 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
 1. Edit [configuration file](#configuration-file) `conf.ini` as needed. <br>
    First-time users should start with `source_catalog/` or `intensity_map/`, which include complete example configurations and test data.
 
-2. Run the pipeline from the directory containing the configuration file: <br>
-   ```bash
-   tomo
-   ```
-   
-   If the configuration file is located in another directory or has a different name: <br>
-   ```bash
-   tomo --conf /path/to/config
-   ```
-
-<!-- <table>
+2. Run the pipeline from the directory containing the configuration file:
+<table>
   <tr>
-    <th width="50%">First-time users</th>
-    <th width="50%">Advanced users</th>
+    <th width="50%">Command mode</th>
+    <th width="50%">Interactive mode</th>
   </tr>
   <tr>
     <td valign="top">
-      <ol>
-      <li> Go to one of the example runtime directories: <br>
-        <code>runtime_script/</code> <br>
-        <code>runtime_test/source_catalog/</code> <br>
-        <code>runtime_test/intensity_map/</code> </li> <br>
-      <li> Edit <a href="#configuration-file">configuration file</a> <code>conf.ini</code> as needed. First-time users should start with <code>source_catalog/</code> or <code>intensity_map/</code>), which include complete example configurations and test data. </li>  <br>
-      <li> Run <code>tomo</code> from the runtime directory to initialize the paths to the precomputed data files: <br>
-      <pre><code>tomo</code></pre> </li> </ol>
+      <pre><code> tomo </code></pre>
+   If the configuration file is located in another directory or has a different name:
+   <pre><code> tomo --conf /path/to/config </code></pre>
     </td>
     <td valign="top">
-      Users will mainly interact with the <a href="#configuration-file">configuration file</a> <code>conf.ini</code>. <br><br>
-    <ol>
-      <li> Modify the <a href="#configuration-file">configuration file</a> <code>conf.ini</code> according to your needs. </li> <br>
-      <li> Run the pipeline from the directory containing the configuration file: <br>
-      <pre><code>tomo</code></pre> 
-      If the configuration file is located in another directory or has a different name: <br>
-      <pre><code>tomo --conf /path/to/config</code></pre> </li> </ol>
+      For users who would like to explore the code in more detail or visualize intermediate results, we also provide the notebook:
+<pre><code>tomo.ipynb</code></pre>
     </td>
   </tr>
-</table> -->
-
-For users who would like to explore the code in more detail or visualize intermediate results, we also provide the notebook:
-```text
-tomo.ipynb
-```
+</table>
 
 ---
 
@@ -123,7 +99,7 @@ We here provide descriptions for the `Basic Settings` section in the configurati
 | `spatial_weight_map_file_1`<sup> [3] </sup> | No | <details> <summary> `/path/to/spatial_weight_map_file` <sup> [2] </sup> </summary> A simple footprint map (0/1 for masked/unmasked areas) or continuous spatial weights. </details>  |
 | `spatial_weight_map_ordering_1`<sup> [3] </sup> | No | Options: <ul><li>`NEST` <li>`RING` |
 | `per_source_weight_colname` | No (Type C only) | <details> <summary> `column_name` </summary> The column name specifying additional weights for each input source in data and random file (fits or csv) </details> |
-| `filename` | Yes | <details> <summary>`/path/to/output_files` </summary> Your output filename. Can also accept a custom path. </details>
+| `output_prefix` | Yes | <details> <summary>`/path/to/output_prefix` </summary> Prefix of output filenames. <ul><li> `<prefix>_ddz.fits`: result table </li> <li> `<prefix>_ddz.pdf`: plot </li> <li> `<prefix>_conf.ini`: copy of configuration </li></ul>Can also accept a custom path. 
 
 **[1]** A discrete count map (e.g., a source catalog read onto HEALPix) is also treated as an intensity map. <br>
 **[2]** The map files are read with [`hp.read_map()`](https://healpy.readthedocs.io/en/latest/generated/healpy.fitsfunc.read_map.html), so please follow the expected format accordingly. <br>
@@ -166,11 +142,11 @@ For advanced configurations, users can modify the settings in the `Advanced Sett
 
 Tomographer produces:
 
-- Measurement file: `OUTPUT_FILENAME.fits`
+- Measurement file: `OUTPUT_PREFIX_ddz.fits`
 
-- Saved configuration file: `OUTPUT_FILENAME.ini`
+- Saved configuration file: `OUTPUT_PREFIX_conf.ini`
 
-- Result plot: `OUTPUT_FILENAME.pdf`
+- Result plot: `OUTPUT_PREFIX_ddz.pdf`
 
 ---
 
