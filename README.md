@@ -79,7 +79,7 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
       <div><code>tomo --conf /path/to/config</code></div>
     </td>
     <td width="50%" valign="top">
-      <div>For users who would like to explore the code in more detail or visualize intermediate results, we also provide the notebook:</div>
+      <div>For users who would like to explore the code in more detail or visualize intermediate results, we also provide a Jupyter Notebook:</div>
       <br>
       <div><code>tomo.ipynb</code></div>
     </td>
