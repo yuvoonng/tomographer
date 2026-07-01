@@ -66,27 +66,20 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
 <table>
   <tr>
     <th width="50%">Command-line mode</th>
-    <th width="50%">Jupyter Notebook mode</th>
+    <th width="50%">Notebook mode</th>
   </tr>
   <tr>
-    <td valign="top">
-      <p><code>tomo</code></p>
-
-      <p>
-        If the configuration file is located in another directory or has a
-        different name:
-      </p>
-
-      <p><code>tomo --conf /path/to/config</code></p>
+    <td width="50%" valign="top">
+      <div><code>tomo</code></div>
+      <br>
+      <div>If the configuration file is located in another directory or has a different name:</div>
+      <br>
+      <div><code>tomo --conf /path/to/config</code></div>
     </td>
-
-    <td valign="top">
-      <p>
-        For users who would like to explore the code in more detail or
-        visualize intermediate results, we also provide the notebook:
-      </p>
-
-      <p><code>tomo.ipynb</code></p>
+    <td width="50%" valign="top">
+      <div>For users who would like to explore the code in more detail or visualize intermediate results, we also provide the notebook:</div>
+      <br>
+      <div><code>tomo.ipynb</code></div>
     </td>
   </tr>
 </table>
