@@ -66,6 +66,38 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
 <table>
   <tr>
     <th width="50%">Command-line mode</th>
+    <th width="50%">Jupyter Notebook mode</th>
+  </tr>
+  <tr>
+    <td valign="top">
+
+<code>tomo</code>
+
+<br><br>
+
+If the configuration file is located in another directory or has a different name:
+
+<br><br>
+
+<code>tomo --conf /path/to/config</code>
+
+    </td>
+    <td valign="top">
+
+For users who would like to explore the code in more detail or visualize intermediate results, we also provide the notebook:
+
+<br><br>
+
+<code>tomo.ipynb</code>
+
+    </td>
+  </tr>
+</table>
+
+2. Run the pipeline from the directory containing the configuration file:
+<table>
+  <tr>
+    <th width="50%">Command-line mode</th>
     <th width="50%">Notebook mode</th>
   </tr>
   <tr>
