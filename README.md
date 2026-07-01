@@ -65,11 +65,13 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
 2. Run the pipeline from the directory containing the configuration file:
 <table>
   <tr>
-    <th width="50%">Command-line mode</th>
-    <th width="50%">Notebook mode</th>
+    <th width="50%">Command Line Mode</th>
+    <th width="50%">Jupyter Notebook Mode</th>
   </tr>
   <tr>
     <td width="50%" valign="top">
+      <div>To run tomographer, simply execute:</div>
+      <br>
       <div><code>tomo</code></div>
       <br>
       <div>If the configuration file is located in another directory or has a different name:</div>
@@ -80,25 +82,6 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
       <div>For users who would like to explore the code in more detail or visualize intermediate results, we also provide the notebook:</div>
       <br>
       <div><code>tomo.ipynb</code></div>
-    </td>
-  </tr>
-</table>
-
-2. Run the pipeline from the directory containing the configuration file:
-<table>
-  <tr>
-    <th width="50%">Command-line mode</th>
-    <th width="50%">Notebook mode</th>
-  </tr>
-  <tr>
-    <td valign="top">
-      <pre><code> tomo </code></pre>
-   If the configuration file is located in another directory or has a different name:
-   <pre><code> tomo --conf /path/to/config </code></pre>
-    </td>
-    <td valign="top">
-      For users who would like to explore the code in more detail or visualize intermediate results, we also provide the notebook:
-<pre><code>tomo.ipynb</code></pre>
     </td>
   </tr>
 </table>
