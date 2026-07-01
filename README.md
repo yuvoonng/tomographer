@@ -70,26 +70,23 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
   </tr>
   <tr>
     <td valign="top">
+      <p><code>tomo</code></p>
 
-<code>tomo</code>
+      <p>
+        If the configuration file is located in another directory or has a
+        different name:
+      </p>
 
-<br><br>
-
-If the configuration file is located in another directory or has a different name:
-
-<br><br>
-
-<code>tomo --conf /path/to/config</code>
-
+      <p><code>tomo --conf /path/to/config</code></p>
     </td>
+
     <td valign="top">
+      <p>
+        For users who would like to explore the code in more detail or
+        visualize intermediate results, we also provide the notebook:
+      </p>
 
-For users who would like to explore the code in more detail or visualize intermediate results, we also provide the notebook:
-
-<br><br>
-
-<code>tomo.ipynb</code>
-
+      <p><code>tomo.ipynb</code></p>
     </td>
   </tr>
 </table>
