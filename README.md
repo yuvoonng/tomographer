@@ -82,6 +82,10 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
       <div>For users who would like to explore the code in more detail or visualize intermediate results, we also provide a Jupyter Notebook:</div>
       <br>
       <div><code>tomo.ipynb</code></div>
+      <br>
+      <div>Modify config_filename if the configuration file is not the default 'conf.ini'</div>
+
+     config_filename
     </td>
   </tr>
 </table>
