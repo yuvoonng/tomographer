@@ -32,7 +32,7 @@ class ConfigChecker():
     """
     def __init__(self, config):
         self.config = config 
-        self.run_type = self.config.get('Reference Sample', 'run_type').lower()
+        self.run_type = self.config.get('Run Type', 'run_type').lower()
         self.ref_sample = 'sdss_lss_plus'
         self.test_type = self.config.get('Test Sample', 'test_type').lower()
         self.test_data_file = self.config.get('Test Sample', 'test_data_file')
@@ -132,9 +132,12 @@ class ConfigChecker():
         
         if self.footprint_definition=='user_defined':
             weighting = self.config['Test Sample']
-            for weight in weighting:
-                if 'spatial_weight_map_file' in weight: 
-                    wpath = weighting.get(weight)
+            add_weighting = self.config['Optional Inputs']
+            combined_weighting = {**weighting, **add_weighting}
+
+            for weight in combined_weighting:
+                if 'weight_map_file' in weight: 
+                    wpath = combined_weighting.get(weight)
                     
                     if wpath: 
                         file = Path(wpath)
@@ -143,8 +146,8 @@ class ConfigChecker():
                         else:
                             self.weight_path.append(wpath)
         
-                        ordering = 'spatial_weight_map_ordering_' + weight.split('_')[-1]
-                        word = weighting.get(ordering).upper()
+                        ordering = weight.replace("_file", "_ordering")
+                        word = combined_weighting.get(ordering).upper()
                         options = ['NEST', 'RING']
                         if word not in options:
                             valid_str = " or ".join(map(str, options))
