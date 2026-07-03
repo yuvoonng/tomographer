@@ -43,7 +43,7 @@ tomographer/
 │   │   ├── conf.ini             # General configuration file
 │   │   ├── tomo.py              # Main code
 │   │   └── tomo.ipynb           # Interactive notebook
-│   ├── runtime_test/
+│   ├── runtime_demo/
 │   │   ├── source_catalog/      # Example for running source catalog
 │   │   └── intensity_map/       # Example for running intensity map
 │   └── precalculated_data/      # Precomputed data for fast, pair-less correlations
