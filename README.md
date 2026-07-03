@@ -71,21 +71,16 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
   <tr>
     <td width="50%" valign="top">
       <div>To run tomographer, simply execute:</div>
-      <br>
-      <div><code>tomo</code></div>
-      <br>
+      <pre><code>tomo</code></pre>
       <div>If the configuration file is located in another directory or has a different name:</div>
-      <br>
-      <div><code>tomo --conf /path/to/config</code></div>
+      <pre><code>tomo --conf /path/to/config</code></pre>
     </td>
     <td width="50%" valign="top">
       <div>For users who would like to explore the code in more detail or visualize intermediate results, we also provide a Jupyter Notebook:</div>
       <br>
       <div><code>tomo.ipynb</code></div>
       <br>
-      <div>Modify config_filename if the configuration file is not the default 'conf.ini'</div>
-
-     config_filename
+      <div>Modify <code>config_filename</code> if the configuration file is not the default '<code>conf.ini</code>'</div>
     </td>
   </tr>
 </table>
