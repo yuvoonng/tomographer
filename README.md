@@ -43,7 +43,7 @@ tomographer/
 │   │   ├── conf.ini             # General configuration file
 │   │   ├── tomo.py              # Main code
 │   │   └── tomo.ipynb           # Interactive notebook
-│   ├── runtime_test/
+│   ├── runtime_demo/
 │   │   ├── source_catalog/      # Example for running source catalog
 │   │   └── intensity_map/       # Example for running intensity map
 │   └── precalculated_data/      # Precomputed data for fast, pair-less correlations
@@ -65,18 +65,22 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
 2. Run the pipeline from the directory containing the configuration file:
 <table>
   <tr>
-    <th width="50%">Command mode</th>
-    <th width="50%">Interactive mode</th>
+    <th width="50%">Command Line Mode</th>
+    <th width="50%">Jupyter Notebook Mode</th>
   </tr>
   <tr>
-    <td valign="top">
-      <pre><code> tomo </code></pre>
-   If the configuration file is located in another directory or has a different name:
-   <pre><code> tomo --conf /path/to/config </code></pre>
+    <td width="50%" valign="top">
+      <div>To run tomographer, simply execute:</div>
+      <pre><code>tomo</code></pre>
+      <div>If the configuration file is located in another directory or has a different name:</div>
+      <pre><code>tomo --conf /path/to/config</code></pre>
     </td>
-    <td valign="top">
-      For users who would like to explore the code in more detail or visualize intermediate results, we also provide the notebook:
-<pre><code>tomo.ipynb</code></pre>
+    <td width="50%" valign="top">
+      <div>For users who would like to explore the code in more detail or visualize intermediate results, we also provide a Jupyter Notebook:</div>
+      <br>
+      <div><code>tomo.ipynb</code></div>
+      <br>
+      <div>Modify <code>config_filename</code> if the configuration file is not the default '<code>conf.ini</code>'</div>
     </td>
   </tr>
 </table>
