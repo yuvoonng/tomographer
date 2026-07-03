@@ -129,40 +129,33 @@ class ConfigChecker():
             if matches:
                 raise ValueError(f"Invalid footprint definition. Did you mean: {matches[0]}?")
             raise ValueError(f"Invalid footprint definition {self.footprint_definition}. Must be {valid_str}.")
-        
-        if self.footprint_definition=='user_defined':
-            weighting = self.config['Test Sample']
-            add_weighting = self.config['Optional Inputs']
-            combined_weighting = {**weighting, **add_weighting}
 
-            for weight in combined_weighting:
-                if 'weight_map_file' in weight: 
-                    wpath = combined_weighting.get(weight)
-                    
-                    if wpath: 
-                        file = Path(wpath)
-                        if not file.is_file():
-                            raise FileNotFoundError(f"The weighting file {wpath} does not exist.")
-                        else:
-                            self.weight_path.append(wpath)
-        
-                        ordering = weight.replace("_file", "_ordering")
-                        word = combined_weighting.get(ordering).upper()
-                        options = ['NEST', 'RING']
-                        if word not in options:
-                            valid_str = " or ".join(map(str, options))
-                            matches = difflib.get_close_matches(word, options, n=1, cutoff=0.6)
-                            if matches:
-                                raise ValueError(f"Invalid map ordering. Did you mean: {matches[0]}?")
-                            raise ValueError(f"Invalid map ordering {word}. Must be {valid_str}.")
-                        else:
-                            self.weight_ord.append(word)
+        if self.footprint_definition=='auto_detection':
+            self.auto_footprint_detection = True
+            
+        if self.footprint_definition=='user_defined':
+            wpath = self.config.get('Test Sample', 'spatial_weight_map_file')
+            
+            if wpath: 
+                file = Path(wpath)
+                if not file.is_file():
+                    raise FileNotFoundError(f"The weighting file {wpath} does not exist.")
+                else:
+                    self.weight_path.append(wpath)
+
+                word = self.config.get('Test Sample', 'spatial_weight_map_ordering').upper()
+                options = ['NEST', 'RING']
+                if word not in options:
+                    valid_str = " or ".join(map(str, options))
+                    matches = difflib.get_close_matches(word, options, n=1, cutoff=0.6)
+                    if matches:
+                        raise ValueError(f"Invalid map ordering. Did you mean: {matches[0]}?")
+                    raise ValueError(f"Invalid map ordering {word}. Must be {valid_str}.")
+                else:
+                    self.weight_ord.append(word)
         
             if len(self.weight_path)==0 and self.test_random_file=='':
                 raise ValueError(f"Must have either random file or spatial weighting map for user-defined mode.")
-        
-        elif self.footprint_definition=='auto_detection':
-            self.auto_footprint_detection = True
         
         logging.info(f'Applying {self.footprint_definition} for footprint definition...')
 
@@ -209,6 +202,37 @@ class ConfigChecker():
                 raise ValueError(f'Number of CPUs must exceed 0.')
         except:
             logging.warning('Set number of CPUs to 4.')
+
+        weighting = self.config['Optional Inputs']
+        for weight in weighting:
+            if 'additional_weight_map_file' in weight: 
+                wpath = weighting.get(weight)
+                
+                if wpath: 
+                    file = Path(wpath)
+                    if not file.is_file():
+                        raise FileNotFoundError(f"The weighting file {wpath} does not exist.")
+                    else:
+                        self.weight_path.append(wpath)
+
+                    try:
+                        ordering = weight.replace("_file", "_ordering")
+                        word = weighting.get(ordering).upper()
+                        pass
+                    except Exception as e:
+                        print(ordering, weight)
+                        raise ValueError(f"The ordering is not found: {ordering}" "\n"
+                            "Please check if the numberings of the file and ordering are consistent.")
+                    
+                    options = ['NEST', 'RING']
+                    if word not in options:
+                        valid_str = " or ".join(map(str, options))
+                        matches = difflib.get_close_matches(word, options, n=1, cutoff=0.6)
+                        if matches:
+                            raise ValueError(f"Invalid map ordering. Did you mean: {matches[0]}?")
+                        raise ValueError(f"Invalid map ordering {word}. Must be {valid_str}.")
+                    else:
+                        self.weight_ord.append(word)
             
     
 # ==== File Path Handling ====
