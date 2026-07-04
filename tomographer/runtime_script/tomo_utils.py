@@ -7,7 +7,6 @@ from astropy.table import Table
 import matplotlib.pyplot as plt
 from matplotlib.ticker import StrMethodFormatter, NullFormatter
 from pylab import cm
-import warnings
 from pathlib import Path
 import logging
 import os
@@ -568,8 +567,11 @@ def safe_read_hmap(fname, in_ordering, out_ordering='NEST', out_nside=2048):
         array (numpy array): 1st column of the input with colname and unit stripped, properly nan-ed
     """
     
+    if in_ordering=='NEST': nest=True
+    else: nest=False
+        
     # Handle HEALPix maps in both "proper" healpy map or plain fits table 
-    data, hdr = hp.read_map(fname, h=True)
+    data, hdr = hp.read_map(fname, nest=nest, h=True)
     hdr = dict(hdr)
     
     if 'ORDERING' in hdr:
@@ -582,11 +584,15 @@ def safe_read_hmap(fname, in_ordering, out_ordering='NEST', out_nside=2048):
     data = data.astype(float)
     data[data == hp.UNSEEN] = np.nan # Mask unseen value -1.6375e+30
     in_nside = hp.npix2nside(len(data))
-    data = hp.ud_grade(data, out_nside, order_in=in_ordering, order_out=out_ordering) # includes reordering 
+    
+    if (in_ordering!='NEST') or (in_nside!=2048):
+        data = hp.ud_grade(data, out_nside, order_in=in_ordering, order_out=out_ordering) # includes reordering 
     
     if (ftype == 'proper'):
-        if (in_ordering != hdr_in_ordering):
-            warnings.warn("User specified ordering is different from the header")
+        hdr_norm = 'NEST' if hdr_in_ordering == 'NESTED' else hdr_in_ordering
+        if in_ordering != hdr_norm:
+            logging.warning("User specified ordering is different from the header.")
+            
     return data
 
 
