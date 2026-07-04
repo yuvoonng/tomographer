@@ -94,31 +94,31 @@ We here provide descriptions for the `Basic Settings` section in the configurati
 | Key | Required? | Value & Description *<small> (Click &#9654; to expand more) </small>* |
  :---: | :---: | :--- |
 | `run_type` | Yes | Options: <ul><li>`quick`: 40 redshift bins <li>`fiducial`: 160 redshift bins
-| `test_type` | Yes | Options<sup>[1]</sup>:  <details> <summary>`source_catalog` (Type C) </summary>  Table containing coordinates <br> (RA/Dec or Glon/Glat or l/b; case-insensitive column names). </details> <details> <summary> `intensity_map` (Type M) </summary> HEALPix map (NSIDE=2048). <br> Out-of-footprint or masked area set to NaN, otherwise, provide weight/footprint map  </details> |
+| `test_type` | Yes | Options<sup>[1]</sup>:  <details> <summary>`source_catalog` (Type C) </summary>  Table containing coordinates <br> (RA/Dec or Glon/Glat or l/b; case-insensitive column names). </details> <details> <summary> `intensity_map` (Type M) </summary> HEALPix map (NSIDE=2048). <br> Out-of-footprint or masked area set to NaN; otherwise, provide a weight/footprint map.  </details> |
 | `test_data_file` | Yes | <details> <summary>`/path/to/test_data_file`</summary>  <ul><li>Data source catalog ([supported file formats](https://docs.astropy.org/en/latest/io/unified_table.html#built-in-table-readers-writers): FITS, CSV, Parquet, HDF5, etc.) </li> <li> Data intensity field (HEALPix 2048)<sup> [2] </sup></li></ul></details> |
 | `test_map_ordering` | Yes <br> (Type M only) | Options: <ul><li>`NEST` <li>`RING`|
-| `beam_fwhm_arcmin` | Yes <br> (Type M only) | <details> <summary> &geq; 1.24  </summary> For source catalogs, the smallest $r_\mathrm{p, min} = 0.5/h\mathrm{Mpc}$ is used. <br> For intensity maps, the beam FWHM corresponds to $$r_{\mathrm{p,min}}/h\mathrm{Mpc} = {\lfloor \mathrm{FWHM}/1.5 \rfloor}/2$$ with constraints within the range $[0.5, 2.5]/h \mathrm{Mpc}$. </details> |
-|`footprint_definition` | Yes | Options: <details> <summary> `user_defined` </summary> **RECOMMENDED** if the selection function is well understood. <br> A test random file and/or spatial weight map must be provided. <br> If a test random file is provided, this mode is selected automatically. </details> <details>  <summary> `full_sky` </summary> Apply no selection; use all-sky pixels. <br> Any provided spatial weight map is ignored. <br> A rectangular cut can be applied in Advanced Settings after selecting this mode. </details> <details> <summary> `auto_detection` </summary> Use with caution; provide only a coarse footprint estimate. <br> Run [auto_footprint](https://github.com/yuvoonng/tomographer/blob/442954f4ee2cc4ade43db0d3c9e305c9bb9bbdb9/tomographer/runtime_script/tomo_utils.py#L611) on the test data file. <br> Any provided spatial weight map is ignored.</details>|
-| `test_random_file` | No | <details> <summary>`/path/to/test_random_file`</summary>  To capture the selection function <br> Random source catalog, or random intensity field (same format as test data) </details> |
-| `spatial_weight_map_file_1`<sup> [3] </sup> | No | <details> <summary> `/path/to/spatial_weight_map_file` <sup> [2] </sup> </summary> A simple footprint map (0/1 for masked/unmasked areas) or continuous spatial weights. </details>  |
-| `spatial_weight_map_ordering_1`<sup> [3] </sup> | No | Options: <ul><li>`NEST` <li>`RING` |
-| `per_source_weight_colname` | No (Type C only) | <details> <summary> `column_name` </summary> The column name specifying additional weights for each input source in data and random file (fits or csv) </details> |
+| `beam_fwhm_arcmin` | Yes <br> (Type M only) | <details> <summary> Beam FWHM of the test intensity map </summary> For undersampled, unsmoothed maps, use 1.24 arcmin as a Gaussian approximation to the NSIDE=2048 pixel window. <br>To avoid 1-halo clustering signal, `rp_min` is derived from the beam FWHM, quantized to a 0.5 Mpc/h grid over [0.5, 2.5]. <br>`rp_max` is fixed at 10 Mpc/h. </details> |
+|`footprint_definition`<sup>[3]</sup> | Yes | Options: <details> <summary> `user_defined` </summary> **Recommended** for science runs. <br> Provide a random catalog (Type C) and/or a spatial weight map (Type C/M). <br> Selected automatically if a test random file is provided. </details> <details>  <summary> `full_sky` </summary> Treat the full sky (Type C) or all non-NaN pixels (Type M) as valid.<br>Useful for truly full-sky data, pre-masked intensity maps, or when using built-in masks in `Advanced Settings`.</details> <details> <summary> `auto_detection` </summary> Use with caution.<br>Estimate a coarse footprint using [auto_footprint](https://github.com/yuvoonng/tomographer/blob/442954f4ee2cc4ade43db0d3c9e305c9bb9bbdb9/tomographer/runtime_script/tomo_utils.py#L611) from the non-zero areas in the test data; susceptible to boundary effects.</details>|
+| `test_random_file` | No | <details> <summary>`/path/to/test_random_file`</summary>  Random source catalog or random HEALPix intensity map (same format as test data)<br>Used only when <code>footprint_definition = user_defined</code>. </details> |
+| `spatial_weight_map_file` | No | <details> <summary> `/path/to/spatial_weight_map_file` <sup> [2] </sup> </summary> A simple footprint map (0/1 for masked/unmasked areas) or continuous spatial weights.<br>Used only when <code>footprint_definition = user_defined</code>. </details>  |
+| `spatial_weight_map_ordering` | No | Options: <ul><li>`NEST` <li>`RING` |
+| `per_source_weight_colname` | No (Type C only) | <details> <summary> `column_name` </summary> The column name specifying additional weights for each input source in data and random file. </details> |
 | `output_prefix` | Yes | <details> <summary>`/path/to/output_prefix` </summary> Prefix of output filenames. <ul><li> `<prefix>_ddz.fits`: result table </li> <li> `<prefix>_ddz.pdf`: plot </li> <li> `<prefix>_conf.ini`: copy of configuration </li></ul>Can also accept a custom path. 
 
 **[1]** A discrete count map (e.g., a source catalog read onto HEALPix) is also treated as an intensity map. <br>
 **[2]** The map files are read with [`hp.read_map()`](https://healpy.readthedocs.io/en/latest/generated/healpy.fitsfunc.read_map.html), so please follow the expected format accordingly. <br>
-**[3]** Replace `1` with other integers to specify additional spatial weight map files.
+**[3]** Footprint, veto masks, and spatial weighting are all represented as full-sky weight maps and multiplied together into a single selection function. Additional masks, rectangular cuts, and weight maps can be specified in `Advanced Settings`.
 
 <br>
 
 For advanced configurations, users can modify the settings in the `Advanced Settings` section. This includes:
-<details> <summary> <strong> Template cleaning </strong>: Regress out a list of foreground templates for intensity maps </summary>
+<details> <summary> <strong> Template cleaning </strong>: Linearly regress out a foreground template from the test field. </summary>
 <ul>
-<li> HI </li>
-<li> CSFD </li>
+<li> <code>HI</code>: Galactic HI from HI4PI (<a href="https://doi.org/10.1051/0004-6361/201629178">HI4PI Collaboration 2016</a>). </li>
+<li> <code>CSFD</code>: Large-scale-structure-free Galactic dust map (<a href="https://doi.org/10.3847/1538-4357/acf4a1">Chiang 2023</a>).</li>
 </ul>
 </details>
-<details> <summary> <strong> High-pass filtering</strong>: Suppress large-scale Galactic foregrounds and survey systematics </summary>
+<details> <summary> <strong> High-pass filtering</strong>: High-pass filter the test field to suppress large-scale foregrounds and systematics. </summary>
 <ul>
  <li> 2&deg; </li>
  <li> 4&deg; </li>
@@ -127,16 +127,19 @@ For advanced configurations, users can modify the settings in the `Advanced Sett
  <li> inf (no filtering) </li>
 </ul>
 </details>
-<details> <summary> <strong> Masking </strong>: Rectangular cut and built-in masks </summary>
+<details> <summary> <strong> Masking </strong>: Rectangular cut and built-in masks. </summary>
 <ul> 
-<li> <code>CSFD_cosmology_area</code>: Dust mask based on the corrected SFD map of <a href="https://doi.org/10.3847/1538-4357/acf4a1">Chiang (2023)</a></li>
-<li> <code>fsky_[25,50,75]_low_dust</code>: Galactic-latitude cuts (|b| > 25°, 50°, 75°) </li>
+<li> <code>CSFD_cosmology_area</code>: UV-optical-IR extragalactic sky outside high dust and WISE veto</li>
+<li> <code>fsky_[25,50,75]_low_dust</code>: Lowest [25,50,75]% dust sky by CSFD E(B-V) </li>
 <li> <code>globular_clusters_veto</code>: Globular clusters </li>
 <li> <code>LMC_SMC_veto</code>: Magellanic Clouds </li>
 <li> <code>nearby_galaxy_clusters_veto</code>: Nearby galaxy clusters </li>
 <li> <code>Planck_point_source_veto</code>: Planck point sources </li>
-<li> <code>SDSS_veto</code>: SDSS footprints </li>
+<li> <code>SDSS_veto</code>: Veto bad imaging stripes/scans in the original SDSS imaging </li>
 </ul>
+</details>
+<details> <summary> <strong> Additional spatial weight maps </strong>:  Same format as <code>spatial_weight_map_file</code>. All masks and weight maps are multiplied together. </summary>
+To add more maps, replace <code>int</code> in <code>additional_weight_map_file_[int]</code> with different integer values.
 </details>
 
 
