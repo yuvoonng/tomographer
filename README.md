@@ -81,7 +81,7 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
       <br>
       <div><code>tomo.ipynb</code></div>
       <br>
-      <div>Modify <code>config_filename</code> therein if using a different configuration file.</div>
+      <div>Modify <code>config_filename</code> therein if using a different configuration </div>
     </td>
   </tr>
 </table>
