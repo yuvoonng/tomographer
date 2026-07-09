@@ -71,9 +71,12 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
   <tr>
     <td width="50%" valign="top">
       <div>Simply execute:</div>
-      <pre><code>tomo</code></pre>
+      <br>
+      <div><code>tomo</code></div>
+      <br>
       <div>If the configuration is in another directory or has a different file name:</div>
-      <pre><code>tomo --conf /path/to/config</code></pre>
+      <br>
+      <div><code>tomo --conf /path/to/config</code></div>
     </td>
     <td width="50%" valign="top">
       <div>To run interactively with step-by-step visualizations, use the Jupyter Notebook:</div>
