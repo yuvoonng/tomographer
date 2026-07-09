@@ -2,7 +2,7 @@
 
 Tomographer is an integrated, end-to-end clustering-redshift estimator designed to make clustering-redshift analysis fast, robust, and accessible to non-experts, while retaining science-grade accuracy for astrophysical and cosmological applications.
 
-It performs redshift inference on arbitrary extragalactic datasets using spatial cross-correlations with a fixed set of spectroscopic reference samples. It accepts either a <ins>source catalog</ins> (a list of sky coordinates) or a HEALPix <ins>intensity map</ins>, and returns the bias-weighted redshift distribution of the input, $b(z)\ {\rm d}N/{\rm d}z$ or $b(z)\ {\rm d}I/{\rm d}z$, in fine redshift bins over $0 < z \lesssim 4$.
+It performs redshift inference on arbitrary extragalactic datasets using spatial cross-correlations with a fixed set of spectroscopic reference samples. It accepts either a <ins>source catalog</ins> (a list of sky coordinates) or a HEALPix <ins>intensity map</ins>, and returns the bias-weighted redshift distribution of the input, $b(z)\ {\rm d}N/{\rm d}z$ or $b(z)\ {\rm d}I/{\rm d}z$, respectively, in fine redshift bins over $0 < z < 4.2$.
  
 For details, see Chiang et al. (2026).
 
@@ -41,17 +41,17 @@ tomographer/
 ├── tomographer/
 │   ├── runtime_script/
 │   │   ├── conf.ini             # General configuration file
-│   │   ├── tomo.py              # Main code
-│   │   └── tomo.ipynb           # Interactive notebook
+│   │   ├── tomo.py              # Main code script
+│   │   └── tomo.ipynb           # Main code equivalent Jupyter notebook
 │   ├── runtime_demo/
-│   │   ├── source_catalog/      # Example for running source catalog
-│   │   └── intensity_map/       # Example for running intensity map
+│   │   ├── source_catalog/      # Example run for source catalog
+│   │   └── intensity_map/       # Example run for intensity map
 │   └── precalculated_data/      # Precomputed data for fast, pair-less correlations
 ├── pyproject.toml               # Build configuration and package metadata (pip install entry point)
 └── README.md
 ```
 
-The `precalculated_data` directory includes a lightweight configuration with 40 redshift bins for quick installation and testing. For science analyses, we recommend the extended 160-bin configuration. The additional data files are hosted on [Zenodo](https://zenodo.org/records/20155554) and downloaded automatically when needed, so no manual download is required.
+The `precalculated_data` directory initially includes a lightweight 40-redshift-bin configuration for quick installation and testing. For science analyses, we recommend the full 160-bin configuration. The additional files are hosted on [Zenodo](https://zenodo.org/records/20155554) and are downloaded automatically when needed; no manual download is required.
 
 ---
 
@@ -60,7 +60,7 @@ The `precalculated_data` directory includes a lightweight configuration with 40 
 Users will mainly interact with the [configuration file](#configuration-file) `conf.ini`.
 
 1. Edit [configuration file](#configuration-file) `conf.ini` as needed. <br>
-   First-time users should start with `source_catalog/` or `intensity_map/`, which include complete example configurations and test data.
+   First-time users can start in `runtime_demo`, with ready-to-run examples in `source_catalog/` and `intensity_map/`.
 
 2. Run the pipeline from the directory containing the configuration file:
 <table>
