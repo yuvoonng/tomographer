@@ -77,7 +77,7 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
       <div>If the configuration is in another directory or has a different file name, run <code>tomo --conf /path/to/config</code></div>
     </td>
     <td width="50%" valign="top">
-      <div>To run interactively with step-by-step visualizations, use the Jupyter Notebook:</div>
+      <div>To run interactively with step-by-step visualization, use Jupyter Notebook:</div>
       <br>
       <div><code>tomo.ipynb</code></div>
       <br>
