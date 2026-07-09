@@ -81,7 +81,7 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
       <br>
       <div><code>tomo.ipynb</code></div>
       <br>
-      <div>Modify <code>config_filename</code> in the notebook if the configuration file is not the default '<code>conf.ini</code>'</div>
+      <div>Modify <code>config_filename</code> if using a configuration file other than '<code>conf.ini</code>'</div>
     </td>
   </tr>
 </table>
