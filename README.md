@@ -40,14 +40,14 @@ tomo init
 tomographer/
 ├── tomographer/
 │   ├── runtime_script/
-│   │   ├── conf.ini             # General configuration file
+│   │   ├── conf.ini             # Configuration file as user interface
 │   │   ├── tomo.py              # Main code script
 │   │   └── tomo.ipynb           # Main code equivalent Jupyter notebook
 │   ├── runtime_demo/
 │   │   ├── source_catalog/      # Example run for source catalog
 │   │   └── intensity_map/       # Example run for intensity map
 │   └── precalculated_data/      # Precomputed data for fast, pair-less correlations
-├── pyproject.toml               # Build configuration and package metadata (pip install entry point)
+├── pyproject.toml               # Build configuration and package metadata for pip install
 └── README.md
 ```
 
@@ -62,7 +62,7 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
 1. Edit [configuration file](#configuration-file) `conf.ini` as needed. <br>
    First-time users can start in `runtime_demo`, with ready-to-run examples in `source_catalog/` and `intensity_map/`.
 
-2. Run the pipeline from the directory containing the configuration file:
+2. Run tomographer from the directory containing `conf.ini` using one of the two equivalent modes:
 <table>
   <tr>
     <th width="50%">Command Line Mode</th>
@@ -70,13 +70,13 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <div>To run tomographer, simply execute:</div>
+      <div>Simply execute:</div>
       <pre><code>tomo</code></pre>
       <div>If the configuration is in another directory or has a different file name:</div>
       <pre><code>tomo --conf /path/to/config</code></pre>
     </td>
     <td width="50%" valign="top">
-      <div>For users who would like to explore the code in more detail or visualize intermediate results, we also provide a Jupyter Notebook:</div>
+      <div>To run interactively with step-by-step visualizations, use the Jupyter Notebook:</div>
       <br>
       <div><code>tomo.ipynb</code></div>
       <br>
