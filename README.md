@@ -72,7 +72,7 @@ Users will mainly interact with the [configuration file](#configuration-file) `c
     <td width="50%" valign="top">
       <div>To run tomographer, simply execute:</div>
       <pre><code>tomo</code></pre>
-      <div>If the configuration file is located in another directory or has a different name:</div>
+      <div>If the configuration is in another directory or has a different file name:</div>
       <pre><code>tomo --conf /path/to/config</code></pre>
     </td>
     <td width="50%" valign="top">
