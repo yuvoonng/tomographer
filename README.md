@@ -1,4 +1,10 @@
-# T~OMOGRAPHER~-2
+<style>
+  .small-caps-header {
+    font-variant: small-caps !important;
+  }
+</style>
+
+<h1 class="small-caps-header">Tomographer-2</h1>
 
 Tomographer is an integrated, end-to-end clustering-redshift estimator designed to make clustering-redshift analysis fast, robust, and accessible to non-experts, while retaining science-grade accuracy for astrophysical and cosmological applications.
 
