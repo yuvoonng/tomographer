@@ -16,14 +16,14 @@ conda install -c conda-forge git-lfs
 git lfs install
 ```  
 
-1. Clone [Tomographer](https://github.com/yuvoonng/tomographer) from Github (~3 GB).
+1. Clone [Tomographer](https://github.com/yuvoonng/tomographer2) from Github (~3 GB).
 ```bash
-git clone https://github.com/yuvoonng/tomographer.git
+git clone https://github.com/yuvoonng/tomographer2.git
 ```   
 
 2. Install the package.
 ```bash
-cd tomographer
+cd tomographer2
 pip install .
 ```
 
@@ -37,7 +37,7 @@ tomo init
 ## Project Structure
 
 ```text
-tomographer/
+tomographer2/
 ├── tomographer/
 │   ├── runtime_script/
 │   │   ├── conf.ini             # Configuration file as user interface

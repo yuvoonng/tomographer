@@ -133,27 +133,7 @@ class ConfigChecker():
             self.auto_footprint_detection = True
             
         if self.footprint_definition=='user_defined':
-<<<<<<< Updated upstream
-            wpath = self.config.get('Test Sample', 'spatial_weight_map_file')
-            
-            if wpath: 
-                file = Path(wpath)
-                if not file.is_file():
-                    raise FileNotFoundError(f"The weighting file {wpath} does not exist.")
-                else:
-                    self.weight_path.append(wpath)
 
-                word = self.config.get('Test Sample', 'spatial_weight_map_ordering').upper()
-                options = ['NEST', 'RING']
-                if word not in options:
-                    valid_str = " or ".join(map(str, options))
-                    matches = difflib.get_close_matches(word, options, n=1, cutoff=0.6)
-                    if matches:
-                        raise ValueError(f"Invalid map ordering. Did you mean: {matches[0]}?")
-                    raise ValueError(f"Invalid map ordering {word}. Must be {valid_str}.")
-                else:
-                    self.weight_ord.append(word)
-=======
             weighting = self.config['Test Sample']
             add_weighting = self.config['Optional Inputs']
             combined_weighting = {**weighting, **add_weighting}
@@ -180,7 +160,6 @@ class ConfigChecker():
                             raise ValueError(f"Invalid map ordering {word}. Must be {valid_str}.")
                         else:
                             self.weight_ord.append(word)
->>>>>>> Stashed changes
         
             if len(self.weight_path)==0 and self.test_random_file=='':
                 raise ValueError(f"Must have either random file or spatial weighting map for user-defined mode.")

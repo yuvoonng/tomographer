@@ -1,11 +1,11 @@
 [project]
-name = "tomographer"
-version = "0.1.0"
+name = "tomographer2"
+version = "2.0.0"
 authors = [
   {name = "Yi-Kuan Chiang", email = "ykchiang@asiaa.sinica.edu.tw"},
   {name = "Yu Voon Ng", email = "yuvoonng@gmail.com"}
 ]
-description = "Redshift Distribution Inference for Source Catalogs and Intensity Maps"
+description = "End-to-end Redshift Distribution Estimation for Source Catalogs and Intensity Maps"
 readme = "README.md"
 requires-python = ">= 3.11"
 dependencies = [
