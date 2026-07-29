@@ -133,6 +133,7 @@ class ConfigChecker():
             self.auto_footprint_detection = True
             
         if self.footprint_definition=='user_defined':
+<<<<<<< Updated upstream
             wpath = self.config.get('Test Sample', 'spatial_weight_map_file')
             
             if wpath: 
@@ -152,6 +153,34 @@ class ConfigChecker():
                     raise ValueError(f"Invalid map ordering {word}. Must be {valid_str}.")
                 else:
                     self.weight_ord.append(word)
+=======
+            weighting = self.config['Test Sample']
+            add_weighting = self.config['Optional Inputs']
+            combined_weighting = {**weighting, **add_weighting}
+
+            for weight in combined_weighting:
+                if 'weight_map_file' in weight: 
+                    wpath = combined_weighting.get(weight)
+                    
+                    if wpath: 
+                        file = Path(wpath)
+                        if not file.is_file():
+                            raise FileNotFoundError(f"The weighting file {wpath} does not exist.")
+                        else:
+                            self.weight_path.append(wpath)
+        
+                        ordering = weight.replace("_file", "_ordering")
+                        word = combined_weighting.get(ordering).upper()
+                        options = ['NEST', 'RING']
+                        if word not in options:
+                            valid_str = " or ".join(map(str, options))
+                            matches = difflib.get_close_matches(word, options, n=1, cutoff=0.6)
+                            if matches:
+                                raise ValueError(f"Invalid map ordering. Did you mean: {matches[0]}?")
+                            raise ValueError(f"Invalid map ordering {word}. Must be {valid_str}.")
+                        else:
+                            self.weight_ord.append(word)
+>>>>>>> Stashed changes
         
             if len(self.weight_path)==0 and self.test_random_file=='':
                 raise ValueError(f"Must have either random file or spatial weighting map for user-defined mode.")
@@ -582,7 +611,7 @@ def safe_read_hmap(fname, in_ordering, out_ordering='NEST', out_nside=2048):
         ftype = 'table' # In this case hp.read_map would have already taken only the 1st column and dropped the rest
     
     data = data.astype(float)
-    data[data == hp.UNSEEN] = np.nan # Mask unseen value -1.6375e+30
+    data[np.isclose(data, hp.UNSEEN)] = np.nan # Mask unseen value -1.6375e+30    
     in_nside = hp.npix2nside(len(data))
     
     if (in_ordering!='NEST') or (in_nside!=2048):

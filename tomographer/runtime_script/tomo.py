@@ -325,7 +325,7 @@ def tomo(args):
     
     
     test_weights_map = np.ones(12*2048*2048)
-    
+
     for map_name in mask_map:
     
         if map_name == 'rec_cut':
@@ -336,6 +336,11 @@ def tomo(args):
             rec_min_lon = config.getfloat('Optional Inputs', 'rec_min_lon')
             rec_max_lon = config.getfloat('Optional Inputs', 'rec_max_lon')
     
+            if rec_min_lat > rec_max_lat:
+                raise ValueError("Minimum latitude cannot be greater than maximum latitude.")
+            if rec_min_lon > rec_max_lon:
+                raise ValueError("Minimum longitude cannot be greater than maximum longitude.")
+    
             rec_cut_coord = config.get('Optional Inputs', 'rec_cut_coord').lower()
             options = ['galactic', 'ecliptic', 'equatorial']
             if rec_cut_coord not in options:
@@ -343,7 +348,7 @@ def tomo(args):
                 if matches:
                     raise ValueError(f"Invalid coordinate frame. Did you mean: {matches[0]}?")
                 raise ValueError(f'Invalid coordinate frame: {rec_cut_coord}')
-                
+    
             if rec_cut_coord == 'galactic':
                 rec_frame = 'galactic'
             elif rec_cut_coord == 'ecliptic':
@@ -351,40 +356,49 @@ def tomo(args):
             elif rec_cut_coord == 'equatorial':
                 rec_frame = 'icrs'
     
-            coord_min = (rec_min_lon, rec_min_lat)
-            coord_max = (rec_max_lon, rec_max_lat)
-            if coord_min>coord_max: 
-                raise ValueError("Minimum coordinate(s) cannot be greater than maximum coordinate(s).")
-            coord_min, coord_max = [SkyCoord(x*u.deg, y*u.deg, frame=rec_frame).transform_to('galactic')
-                  for x, y in [coord_min, coord_max]]
-            
-            theta_top = np.radians(90 - coord_max.b.degree)
-            theta_bottom = np.radians(90 - coord_min.b.degree)
-            pix_in_strip = hp.query_strip(2048, theta_top, theta_bottom, nest=True)
-        
-            _, phi = hp.pix2ang(2048, pix_in_strip, nest=True)
-            lon_deg = np.degrees(phi)
-            lon_mask = (lon_deg >= coord_min.l.degree) & (lon_deg <= coord_max.l.degree)
-            
-            rec_pix = pix_in_strip[lon_mask]
+            # Coordinates of all HEALPix pixels (Galactic frame)
+            npix = hp.nside2npix(2048)
+            pix = np.arange(npix)
+            lon_gal, lat_gal = hp.pix2ang(2048, pix, nest=True, lonlat=True)
+    
+            coords = SkyCoord(l=lon_gal*u.deg,
+                              b=lat_gal*u.deg,
+                              frame='galactic').transform_to(rec_frame)
+    
+            if rec_cut_coord == 'galactic':
+                lon = coords.l.wrap_at(360*u.deg).degree
+                lat = coords.b.degree
+            elif rec_cut_coord == 'ecliptic':
+                lon = coords.lon.wrap_at(360*u.deg).degree
+                lat = coords.lat.degree
+            elif rec_cut_coord == 'equatorial':
+                lon = coords.ra.wrap_at(360*u.deg).degree
+                lat = coords.dec.degree
+    
+            rec_pix = pix[
+                (lat >= rec_min_lat) &
+                (lat <= rec_max_lat) &
+                (lon >= rec_min_lon) &
+                (lon <= rec_max_lon)
+            ]
     
             rec_include = config.getboolean('Optional Inputs', 'rec_include')
             if rec_include == True:
-                rec_mask_map = np.zeros(12*2048*2048)
+                rec_mask_map = np.zeros(npix)
                 rec_mask_map[rec_pix] = 1.
             else:
-                rec_mask_map = np.ones(12*2048*2048)
+                rec_mask_map = np.ones(npix)
                 rec_mask_map[rec_pix] = 0.
-            
+    
             test_weights_map *= rec_mask_map
-            
+    
         else:
             logging.info(f'Reading {map_name} for masking...')
-            path = get_filepath('mask', mask_name = map_name)
+            path = get_filepath('mask', mask_name=map_name)
     
             mask_data = Table.read(path)
             mask_data = utils.tbl2array(mask_data)
-            
+    
             test_weights_map *= mask_data
             del mask_data
     
@@ -977,26 +991,6 @@ def tomo(args):
     w['dNdz_b_BS'] = dNdz_b_BS
     
     
-    # Correct for spatial resolution (see Appendix B of Chiang+26)
-    
-    def sigmoid(z):
-        if config_par.zbin_num==160:
-            L, U, k, z0 = 1.01, 1.56, 18.29, 1.05
-        else:
-            L, U, k, z0 = 1.01, 1.40, 20.67, 1.05
-        return L + (U-L)/(1+np.exp(-k * (z-z0)))
-        
-    zless = np.argmin(np.abs(w['z']-3))
-    zmore = np.argmin(np.abs(w['z']-.05))
-    
-    spatcorr = np.sqrt(np.array(sigmoid(w['z'][zmore:zless])))
-    
-    if rp_min<=0.5/h:
-        w['dNdz_b'][zmore:zless] /= spatcorr
-        w['dNdz_b_err'][zmore:zless] /= spatcorr
-        w['dNdz_b_BS'][zmore:zless] /= spatcorr.reshape(len(spatcorr),1)
-    
-    
     if config_par.zbin_num==160:
         rebinned_w = utils.z_rebin_tomo_out(w, rebinned_z_edges, rebinned_z_ctrs)
     
@@ -1058,8 +1052,11 @@ def tomo(args):
     fits_path.parent.mkdir(parents=True, exist_ok=True)
     
     hdul.writeto(fits_path, overwrite=True)
-    shutil.copy2(f"{config_filename}", ini_path)
-
+    
+    src = Path(config_filename).resolve()
+    dst = ini_path.resolve()
+    if src != dst:
+        shutil.copy2(f"{config_filename}", ini_path)
     
     # # Result visualisation
     
@@ -1072,7 +1069,7 @@ def tomo(args):
         ylabel = r'b\ \mathrm{d}N/\mathrm{d}z\ \mathrm{[\#/deg^2]}'
     else:
         key_col = 'dIdz_b'
-        ylabel = r'b\ \mathrm{d}I/\mathrm{d}z\ \mathrm{[map\ unit/deg^2]}'
+        ylabel = r'b\ \mathrm{d}I/\mathrm{d}z\ \mathrm{[map\ unit]}'
     
     y1 = w[key_col]  
     y1err = w['{}_err'.format(key_col)]

@@ -11,6 +11,7 @@ tomographer/precalculated_data/
 *.h5
 *.npy
 *.npz
+*.pqt
 
 # ==============================================================================
 # Python Environment & Cache
