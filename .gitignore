@@ -56,3 +56,4 @@ MANIFEST
 *.swp
 *~
 test
+**/.virtual_documents/
