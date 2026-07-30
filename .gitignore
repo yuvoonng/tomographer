@@ -5,7 +5,6 @@
 tomographer/precalculated_data/
 
 # Global safety net for large scientific data formats
-*.fits
 *.parquet
 *.hdf5
 *.h5
