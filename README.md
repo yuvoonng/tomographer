@@ -210,7 +210,7 @@ We welcome collaborations based on the Tomographer framework. If your scientific
 </details>
 
 <details> <summary> <strong> What should I do if I encounter an issue that is not listed here? </strong> </summary>
-Feel free to join the discussion group and ask your question there. Your question may help other users facing the same issue.
+Feel free to join the <a href="https://groups.google.com/g/tomographer">discussion group</a> and ask your question there. Your question may help other users facing the same issue.
 </details>
 
 
@@ -219,5 +219,5 @@ Feel free to join the discussion group and ask your question there. Your questio
 ## Contact
 
 Yi-Kuan Chiang: ykchiang (at) asiaa.sinica.edu.tw\
-Yu Voon Ng: yvng (at) asiaa.sinica.edu.tw\
-Discussion group: 
+Yu Voon Ng: yuvoonng (at) gmail.com\
+Discussion group: https://groups.google.com/g/tomographer
