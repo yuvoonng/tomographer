@@ -1052,11 +1052,10 @@ def tomo(args):
     fits_path.parent.mkdir(parents=True, exist_ok=True)
     
     hdul.writeto(fits_path, overwrite=True)
-    
-    src = Path(config_filename).resolve()
-    dst = ini_path.resolve()
-    if src != dst:
+    try:
         shutil.copy2(f"{config_filename}", ini_path)
+    except:
+        pass
     
     # # Result visualisation
     

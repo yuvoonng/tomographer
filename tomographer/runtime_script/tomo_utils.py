@@ -39,7 +39,6 @@ class ConfigChecker():
         self.beam_fwhm_arcmin = 1.24 # Default
         self.auto_footprint_detection = False # If True, the code will run auto_footprint() for the map
         self.footprint_definition = self.config.get('Test Sample', 'footprint_definition').lower()
-        self.weight_colname = self.config.get('Test Sample', 'per_source_weight_colname')
         self.weight_path = []
         self.weight_ord = []
         self.template_cleaning = self.config.get('Test Sample Processing', 'template_cleaning').upper()
@@ -172,6 +171,9 @@ class ConfigChecker():
             self.output_filename = 'out'
         else:
             self.output_filename = self.output_filename
+
+        if self.test_type == 'source_catalog':
+            self.weight_colname = self.config.get('Test Sample', 'per_source_weight_colname')
 
     def check_test_sample_processing(self):
         # Check template_cleaning
