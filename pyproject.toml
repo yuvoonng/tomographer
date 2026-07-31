@@ -1,6 +1,6 @@
 [project]
-name = "tomographer2"
-version = "2.0.0"
+name = "tomographer"
+version = "1.0.0"
 authors = [
   {name = "Yi-Kuan Chiang", email = "ykchiang@asiaa.sinica.edu.tw"},
   {name = "Yu Voon Ng", email = "yuvoonng@gmail.com"}
