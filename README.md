@@ -5,7 +5,7 @@ Tomographer is an integrated, end-to-end clustering-redshift software and data f
 It performs redshift inference on arbitrary extragalactic datasets using spatial cross-correlations with a fixed set of spectroscopic reference samples. It accepts either a <ins>source catalog</ins> (a list of sky coordinates) or a HEALPix <ins>intensity map</ins>, and returns the bias-weighted redshift distribution of the input, $b\ ({\rm d}N/{\rm d}z)$ or $b\ ({\rm d}I/{\rm d}z)$, respectively, in fine redshift bins over $0 < z \lesssim 4$.
 
 > **Note**
-> This GitHub release supersedes the original Tomographer web service. The legacy service remains available at http://tomographer.idies.jhu.edu/ for users to access previously submitted jobs and results, but no new jobs may be submitted.
+> This GitHub release supersedes the previous Tomographer web service. The legacy service remains available [here](http://tomographer.idies.jhu.edu/) only for users to access previously submitted jobs and results.
 
 ---
 
